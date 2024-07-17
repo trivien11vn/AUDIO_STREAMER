@@ -5,8 +5,16 @@ import {useSelector, useDispatch} from 'react-redux'
 import { Home, Login, Public } from "./pages/public";
 import {Route, Routes} from 'react-router-dom'
 import path from "./utils/path";
+import { useEffect } from "react";
+import {getHome} from './store/actions'
+
 
 function App() {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getHome())
+  }, [])
+  
   return (
     <>
     <div className="">
