@@ -8,7 +8,7 @@ const activeStyle = 'py-2 px-[25px] border font-bold text-[#0F7070] text-[13px] 
 
 const LeftSidebar = () => {
   return (
-    <div className='flex flex-col bg-[#DDE4E4]'>
+    <div className='flex flex-col bg-main-200 h-full'>
       <div className='w-full h-[70px] py-[15px] px-[25px] flex items-center justify-start'>
       {/*COVER: ưu tiên kích thước, chấp nhận mất 1 phần của ảnh
         CONTAIN: ưu tiên ảnh, lấy chiều rộng/cao để full 1 trong 2 */}

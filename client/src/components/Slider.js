@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch} from 'react-redux'
 import { getArrSlider } from '../utils/fn'
+import {setCurrentSongId} from '../store/actions'
 
 const Slider = () => {
     const {banner} = useSelector(state => state.app)
+    const dispatch = useDispatch()
+
     useEffect(() => {
       const sliderEls = document.getElementsByClassName('slider-item')
       let min = 0 
@@ -12,9 +15,9 @@ const Slider = () => {
         const list = getArrSlider(min, max, sliderEls.length - 1)
         // Delete animation class
         for(let i=0; i<sliderEls.length; i++){
-          sliderEls[i].classList.remove('animate-slide-right', 'order-last', 'z-20')
-          sliderEls[i].classList.remove('animate-slide-left', 'order-first', 'z-10')
-          sliderEls[i].classList.remove('animate-slide-left2', 'order-2', 'z-10')
+          sliderEls[i]?.classList?.remove('animate-slide-right', 'order-last', 'z-20')
+          sliderEls[i]?.classList?.remove('animate-slide-left', 'order-first', 'z-10')
+          sliderEls[i]?.classList?.remove('animate-slide-left2', 'order-2', 'z-10')
 
           if(list.some(item => item === i)){
             sliderEls[i].style.cssText = 'display:block'
@@ -27,13 +30,13 @@ const Slider = () => {
         // Add animation class
         list.forEach(item => {
           if(item === max){
-            sliderEls[item].classList.add('animate-slide-right', 'order-last', 'z-20')
+            sliderEls[item]?.classList?.add('animate-slide-right', 'order-last', 'z-20')
           }
           else if(item === min){
-            sliderEls[item].classList.add('animate-slide-left', 'order-first', 'z-10')
+            sliderEls[item]?.classList?.add('animate-slide-left', 'order-first', 'z-10')
           }
           else{
-            sliderEls[item].classList.add('animate-slide-left2', 'order-2', 'z-10')
+            sliderEls[item]?.classList?.add('animate-slide-left2', 'order-2', 'z-10')
           }
         })
         if(min === sliderEls?.length - 1){
@@ -50,18 +53,24 @@ const Slider = () => {
           max += 1
         }
 
-        console.log(list)
-      }, 2500);
+      }, 3000);
       return () => { 
         intervalId && clearInterval(intervalId)
        }
     }, [])
+
+    const handleClickBanner = (el) => {
+      if(el?.type === 4){
+        dispatch(setCurrentSongId(el?.encodeId))
+      }
+    }
     
   return (
     <div className='w-full overflow-hidden px-[59px]'>
       <div className='flex w-full gap-8 pt-8'>
         {banner?.map((el,index) => (
             <img 
+              onClick={()=>handleClickBanner(el)}
               key={el?.encodeId} 
               src={el?.banner} 
               className={`slider-item flex-1 object-contain w-[30%] rounded-lg ${index <=2 ? 'block' : 'hidden'}`}

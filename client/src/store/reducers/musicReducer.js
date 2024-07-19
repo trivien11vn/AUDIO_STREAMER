@@ -1,16 +1,16 @@
 import actionType from '../actions/actionType'
 const initState = {
-    banner: [],
+    currentSongId : null
     
 }
 
-const appReducer = (state = initState, action) => {
+const musicReducer = (state = initState, action) => {
     //action: object ma dispatch tra ve
     switch (action.type) {
-        case actionType.GET_HOME:
+        case actionType.SET_CURRENT_SONG_ID:
             return {
                 ...state,
-                banner: action?.homeData?.find(item => item?.sectionType === 'banner')?.items || null
+                currentSongId: action?.sid || null
             }
     
         default:
@@ -18,4 +18,4 @@ const appReducer = (state = initState, action) => {
     }
 }
 
-export default appReducer
+export default musicReducer
