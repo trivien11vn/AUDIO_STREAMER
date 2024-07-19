@@ -1,6 +1,6 @@
 import axios from '../axios'  //do axios export default, nen import dat ten tuy y
 
-export const apiDetailSong = (sid) => new Promise(async(resolve, reject) => {
+export const apiGetDetailSong = (sid) => new Promise(async(resolve, reject) => {
     try{
         const response = await axios({
             url: '/song',
@@ -14,12 +14,27 @@ export const apiDetailSong = (sid) => new Promise(async(resolve, reject) => {
     }
 })
 
-export const apiInfoSong = (sid) => new Promise(async(resolve, reject) => {
+export const apiGetInfoSong = (sid) => new Promise(async(resolve, reject) => {
     try{
         const response = await axios({
             url: '/infosong',
             method: 'get',
             params: {id: sid}
+        })
+        resolve(response)
+    }
+    catch(error){
+        reject(error);
+    }
+})
+
+
+export const apiGetDetailPlaylist = (plid) => new Promise(async(resolve, reject) => {
+    try{
+        const response = await axios({
+            url: '/detailplaylist',
+            method: 'get',
+            params: {id: plid}  
         })
         resolve(response)
     }

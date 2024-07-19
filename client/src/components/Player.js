@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import { useSelector } from 'react-redux'
-import { apiDetailSong, apiInfoSong } from '../apis';
+import { apiGetDetailSong, apiGetInfoSong } from '../apis';
 import icons from '../utils/icons';
 
 const {GoHeart, GoHeartFill, TbDots, MdSkipNext, MdSkipPrevious, CiRepeat, CiShuffle, FaPlay, FaPause} = icons
@@ -14,8 +14,8 @@ const Player = () => {
     useEffect(() => {
       const fetchSong = async() => {
         const [res1, res2] = await Promise.all([
-          apiInfoSong(currentSongId),
-          apiDetailSong(currentSongId),
+          apiGetInfoSong(currentSongId),
+          apiGetDetailSong(currentSongId),
         ])
         if(res1?.data?.err === 0){
           setSongInfo(res1?.data?.data)
