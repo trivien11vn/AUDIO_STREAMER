@@ -7,3 +7,10 @@ export const setCurrentSongId = (sid) => {
         sid
     }
 }
+
+export const playSong = (flag) => {
+    return {
+        type: actionType.PLAY_SONG,
+        flag
+    }
+}

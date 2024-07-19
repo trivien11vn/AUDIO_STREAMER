@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch} from 'react-redux'
 import { getArrSlider } from '../utils/fn'
-import {setCurrentSongId} from '../store/actions'
+import {playSong, setCurrentSongId} from '../store/actions'
 
 const Slider = () => {
     const {banner} = useSelector(state => state.app)
@@ -60,8 +60,9 @@ const Slider = () => {
     }, [])
 
     const handleClickBanner = (el) => {
-      if(el?.type === 4){
+      if(el?.type === 1){
         dispatch(setCurrentSongId(el?.encodeId))
+        dispatch(playSong(true))
       }
     }
     
