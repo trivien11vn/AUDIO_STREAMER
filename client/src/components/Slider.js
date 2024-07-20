@@ -14,9 +14,9 @@ const Slider = () => {
       let min = 0 
       let max = 2
       const intervalId = setInterval(() => {
-        const list = getArrSlider(min, max, sliderEls.length - 1)
+        const list = getArrSlider(min, max, sliderEls?.length - 1)
         // Delete animation class
-        for(let i=0; i<sliderEls.length; i++){
+        for(let i=0; i<sliderEls?.length; i++){
           sliderEls[i]?.classList?.remove('animate-slide-right', 'order-last', 'z-20')
           sliderEls[i]?.classList?.remove('animate-slide-left', 'order-first', 'z-10')
           sliderEls[i]?.classList?.remove('animate-slide-left2', 'order-2', 'z-10')
@@ -63,10 +63,12 @@ const Slider = () => {
 
     const handleClickBanner = (el) => {
       if(el?.type === 1){
+        console.log('111')
         dispatch(setCurrentSongId(el?.encodeId))
         dispatch(playSong(true))
       }
       else if(el?.type === 4){
+        console.log('444')
         const path = el?.link?.split('.')[0]
         navigate(path)
       }

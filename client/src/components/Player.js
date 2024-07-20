@@ -1,11 +1,14 @@
-import React, {useEffect, useState} from 'react'
-import { useSelector } from 'react-redux'
+import React, {useEffect, useState, useRef} from 'react'
+import { useSelector, useDispatch} from 'react-redux'
 import { apiGetDetailSong, apiGetInfoSong } from '../apis';
 import icons from '../utils/icons';
+import { playSong } from '../store/actions';
 
 const {GoHeart, GoHeartFill, TbDots, MdSkipNext, MdSkipPrevious, CiRepeat, CiShuffle, FaPlay, FaPause} = icons
 const Player = () => {
-    const audioEl = new Audio()
+
+    const dispatch = useDispatch()
+    const audioEl = useRef(new Audio())
     const {currentSongId, isPlay} = useSelector(state => state.music)
     const [songInfo, setSongInfo] = useState(null)
     const [source,  setSource] = useState(null)
@@ -27,14 +30,28 @@ const Player = () => {
       fetchSong()
     }, [currentSongId]);
 
+    console.log(source)
+
     useEffect(() => {
-      
-    }, [currentSongId]);
+      audioEl.current.pause()
+      audioEl.current.src = source
+      audioEl.current.load()
+      if(isPlay){
+        audioEl.current.play()
+      }
+    }, [currentSongId, source]);
   
     
     const handlChangeState = () => {
-      // if(isPlaying){setIsPlaying(false)}
-      // else setIsPlaying(true)
+      if(isPlay){
+        console.log('pause playing')
+        audioEl.current.pause()
+        dispatch(playSong(false))
+      }
+      else{
+        audioEl.current.play()
+        dispatch(playSong(true))
+      }
     }
     
   return (
