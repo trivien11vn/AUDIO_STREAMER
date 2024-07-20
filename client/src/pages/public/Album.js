@@ -35,7 +35,7 @@ const Album = () => {
           </span>
         </div>
       </div>
-      <div className='flex-auto bg-green-500'>
+      <div className='flex-auto bg-green-500 overflow-y-scroll'>
         <span className='text-sm'>
           <span className='text-gray-600'>Lời tựa: </span>
           <span>{playlist?.sortDescription}</span>

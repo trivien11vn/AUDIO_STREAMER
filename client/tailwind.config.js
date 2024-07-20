@@ -62,7 +62,7 @@ module.exports = {
       }
     },
     screens: {
-      '1000': '1000px'
+      '1600': '1600px'
     }
   },
   plugins: [],

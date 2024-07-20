@@ -14,6 +14,7 @@ import { MdSkipPrevious } from "react-icons/md";
 import { CiShuffle } from "react-icons/ci";
 import { FaPlay } from "react-icons/fa";
 import { FaPause } from "react-icons/fa";
+import { FaMusic } from "react-icons/fa";
 
 const icons = {
     MdOutlineLibraryMusic,
@@ -31,7 +32,8 @@ const icons = {
     MdSkipPrevious,
     CiShuffle,
     FaPlay,
-    FaPause
+    FaPause,
+    FaMusic
 }
 
 export default icons
