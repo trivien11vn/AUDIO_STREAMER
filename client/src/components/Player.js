@@ -4,6 +4,7 @@ import { apiGetDetailSong, apiGetInfoSong } from '../apis';
 import icons from '../utils/icons';
 import { playSong } from '../store/actions';
 import moment from 'moment';
+import {toast} from 'react-toastify'
 
 const {GoHeart, GoHeartFill, TbDots, MdSkipNext, MdSkipPrevious, CiRepeat, CiShuffle, FaPlay, FaPause} = icons
 const Player = () => {
@@ -15,6 +16,7 @@ const Player = () => {
     const [start, setStart] = useState(0)
     
     const thumbRef = useRef()
+    const trackRef = useRef()
 
     useEffect(() => {
       const fetchSong = async() => {
@@ -24,34 +26,42 @@ const Player = () => {
         ])
         if(res1?.data?.err === 0){
           setSongInfo(res1?.data?.data)
+          setStart(0)
         }
         if(res2?.data?.err === 0){
           audio.pause()
           setAudio(new Audio(res2?.data?.data['128']))
         }
+        else{
+            console.log('audio is empty')
+            dispatch(playSong(false))
+            setAudio(new Audio())
+            toast.warn(res2?.data?.msg)
+            setStart(0)
+            thumbRef.current.style.cssText = `right: 100%`
+        }
       }
       fetchSong()
     }, [currentSongId]);
 
-
     useEffect(() => {
-      console.log(isPlay)
-      if(isPlay){
-        intervalId = setInterval(() => { 
-          let percent = Math.round(audio.currentTime * 10000 / songInfo?.duration) / 100
-          thumbRef.current.style.cssText = `right: ${100 - percent}%`
-          setStart(Math.round(audio.currentTime))
-        }, 200)
-      }
-      return () => clearInterval(intervalId);
-    }, [isPlay])
-
-    useEffect(() => {
-      audio.load()
-      if(isPlay){
-        audio.play()
-      }
+        console.log('pauseee')
+        audio.pause()
+        audio.load()
+        audio.currentTime = 0
+        if(isPlay){
+            console.log('playyyy')
+            audio.play()
+            intervalId = setInterval(() => { 
+                console.log(audio.currentTime)
+                let percent = Math.round(audio.currentTime * 10000 / songInfo?.duration) / 100
+                thumbRef.current.style.cssText = `right: ${100 - percent}%`
+                setStart(Math.round(audio.currentTime))
+            }, 200)
+        }
+        return () => clearInterval(intervalId);
     }, [audio]);
+
   
     
     const handlChangeState = async() => {
@@ -65,6 +75,14 @@ const Player = () => {
       }
     }
     
+    const handleProgressBar = (e) => {
+        const trackRect = trackRef?.current?.getBoundingClientRect()
+        const percent = Math.round((e.clientX - trackRect.left) * 10000/trackRect.width ) / 100
+        console.log(percent)
+        thumbRef.current.style.cssText = `right: ${100 - percent}%`
+        audio.currentTime = percent * songInfo.duration /100
+        setStart(Math.round(audio.currentTime))
+    }
   return (
     <div className='bg-main-400 px-5 h-full flex'>
         <div className='w-[30%] flex-auto flex gap-3 items-center'>
@@ -92,9 +110,12 @@ const Player = () => {
           </div>
           <div className='w-full flex justify-around items-center text-xs'>
             <span>{moment.utc(start * 1000).format('mm:ss')}</span>
-            <div className='w-4/5 h-[3px] bg-[rgba(0,0,0,0.1)] relative rounded-l-full rounded-r-full'>
+            <div
+                ref={trackRef}
+                onClick={handleProgressBar}
+                className='w-4/5 h-[3px] hover:h-[8px] cursor-pointer bg-[rgba(0,0,0,0.1)] relative rounded-l-full rounded-r-full'>
                {/* thumbRef dai dien the div */}
-              <div ref={thumbRef} className='absolute top-0 left-0 h-[3px] bg-[#0e8080] rounded-l-full rounded-r-full'></div>
+              <div ref={thumbRef} className='absolute top-0 left-0 bottom-0 bg-[#0e8080] rounded-l-full rounded-r-full'></div>
             </div>
             <span>{moment.utc(songInfo?.duration*1000).format('mm:ss')}</span>
           </div>
