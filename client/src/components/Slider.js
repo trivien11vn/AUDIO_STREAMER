@@ -63,12 +63,10 @@ const Slider = () => {
 
     const handleClickBanner = (el) => {
       if(el?.type === 1){
-        console.log('111')
         dispatch(setCurrentSongId(el?.encodeId))
         dispatch(playSong(true))
       }
       else if(el?.type === 4){
-        console.log('444')
         const path = el?.link?.split('.')[0]
         navigate(path)
       }

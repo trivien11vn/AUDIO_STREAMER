@@ -4,7 +4,6 @@ import moment from 'moment'
 import { GoDotFill } from "react-icons/go";
 
 const ListSong = ({song, totalDuration}) => {
-    console.log(song)
   return (
     <div className='w-full flex flex-col text-xs text-gray-600'>
         <div className='flex justify-between items-center p-[10px] font-semibold'>

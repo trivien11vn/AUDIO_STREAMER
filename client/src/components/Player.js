@@ -3,17 +3,19 @@ import { useSelector, useDispatch} from 'react-redux'
 import { apiGetDetailSong, apiGetInfoSong } from '../apis';
 import icons from '../utils/icons';
 import { playSong } from '../store/actions';
+import moment from 'moment';
 
 const {GoHeart, GoHeartFill, TbDots, MdSkipNext, MdSkipPrevious, CiRepeat, CiShuffle, FaPlay, FaPause} = icons
 const Player = () => {
-
+    var intervalId 
     const dispatch = useDispatch()
-    const audioEl = useRef(new Audio())
+    const [audio, setAudio] = useState(new Audio())
     const {currentSongId, isPlay} = useSelector(state => state.music)
     const [songInfo, setSongInfo] = useState(null)
-    const [source,  setSource] = useState(null)
+    const [start, setStart] = useState(0)
+    
+    const thumbRef = useRef()
 
-    console.log(isPlay)
     useEffect(() => {
       const fetchSong = async() => {
         const [res1, res2] = await Promise.all([
@@ -24,32 +26,41 @@ const Player = () => {
           setSongInfo(res1?.data?.data)
         }
         if(res2?.data?.err === 0){
-          setSource(res2?.data?.data['128'])
+          audio.pause()
+          setAudio(new Audio(res2?.data?.data['128']))
         }
       }
       fetchSong()
     }, [currentSongId]);
 
-    console.log(source)
 
     useEffect(() => {
-      audioEl.current.pause()
-      audioEl.current.src = source
-      audioEl.current.load()
+      console.log(isPlay)
       if(isPlay){
-        audioEl.current.play()
+        intervalId = setInterval(() => { 
+          let percent = Math.round(audio.currentTime * 10000 / songInfo?.duration) / 100
+          thumbRef.current.style.cssText = `right: ${100 - percent}%`
+          setStart(Math.round(audio.currentTime))
+        }, 200)
       }
-    }, [currentSongId, source]);
+      return () => clearInterval(intervalId);
+    }, [isPlay])
+
+    useEffect(() => {
+      audio.load()
+      if(isPlay){
+        audio.play()
+      }
+    }, [audio]);
   
     
-    const handlChangeState = () => {
+    const handlChangeState = async() => {
       if(isPlay){
-        console.log('pause playing')
-        audioEl.current.pause()
+        audio.pause()
         dispatch(playSong(false))
       }
       else{
-        audioEl.current.play()
+        audio.play()
         dispatch(playSong(true))
       }
     }
@@ -79,7 +90,14 @@ const Player = () => {
             <span className='cursor-pointer'><MdSkipNext size={24}/></span>
             <span className='cursor-pointer' title='Bật phát lại tất cả'><CiRepeat size={24}/></span>
           </div>
-          <div>progress bar</div>
+          <div className='w-full flex justify-around items-center text-xs'>
+            <span>{moment.utc(start * 1000).format('mm:ss')}</span>
+            <div className='w-4/5 h-[3px] bg-[rgba(0,0,0,0.1)] relative rounded-l-full rounded-r-full'>
+               {/* thumbRef dai dien the div */}
+              <div ref={thumbRef} className='absolute top-0 left-0 h-[3px] bg-[#0e8080] rounded-l-full rounded-r-full'></div>
+            </div>
+            <span>{moment.utc(songInfo?.duration*1000).format('mm:ss')}</span>
+          </div>
         </div>
         <div className='w-[30%] flex-auto border border-red-500'>Volumn</div>
     </div>
