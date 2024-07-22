@@ -15,6 +15,7 @@ const Player = () => {
     const [songInfo, setSongInfo] = useState(null)
     const [start, setStart] = useState(0)
     const [isShuffle, setIsShuffle] = useState(false)
+    const [isNextSong, setIsNextSong] = useState(false)
     
     const thumbRef = useRef()
     const trackRef = useRef()
@@ -48,7 +49,7 @@ const Player = () => {
     useEffect(() => {
         audio.load()
         audio.currentTime = 0
-        if(isPlay){
+        if(isPlay && thumbRef.current){
             audio.play()
             intervalId = setInterval(() => {
                 let percent = Math.round(audio.currentTime * 10000 / songInfo?.duration) / 100
@@ -59,7 +60,26 @@ const Player = () => {
         return () => clearInterval(intervalId);
     }, [audio]);
 
-  
+    useEffect(() => {
+      const handleEnded = () => {
+        console.log('end')
+        console.log({isNextSong, isShuffle})
+        if(isShuffle){
+          handleSuffle()
+        }
+        else if (isNextSong){
+          handleNextSong()
+        }
+        else{
+          audio.pause()
+          dispatch(playSong(false))
+        }
+      }
+      audio.addEventListener('ended', handleEnded)
+      return () => {
+        audio.removeEventListener('ended', handleEnded)
+      }
+    }, [audio, isNextSong, isShuffle])
     
     const handlChangeState = async() => {
       if(isPlay){
@@ -117,11 +137,14 @@ const Player = () => {
   }
 
   const handleSuffle = () => {
-
+    setIsShuffle(prev => !prev)
+    const randomIndex = Math.ceil(Math.random() * album?.length) - 1
+    dispatch(setCurrentSongId(album[randomIndex].encodeId))
+    dispatch(playSong(true))
   }
 
   return (
-    <div className='bg-main-400 px-5 h-full flex z-[99]'>
+    <div className='bg-main-400 px-5 h-full flex'>
         <div className='w-[30%] flex-auto flex gap-3 items-center'>
           <img src={songInfo?.thumbnail} alt='thumbnail' className='w-16 h-16 object-cover border rounded-md'/>
           <div className='flex flex-col'>
@@ -135,7 +158,7 @@ const Player = () => {
         </div>
         <div className='w-[40%] flex-auto flex flex-col items-center justify-center gap-2 py-2'>
           <div className='flex gap-8 justify-center items-center'>
-            <span onClick={() => setIsShuffle(prev => !prev)} className={`cursor-pointer ${isShuffle && 'text-purple-600'}`} title='Bật phát ngẫu nhiên'><CiShuffle size={24}/></span>
+            <span onClick={() =>{setIsNextSong(false); setIsShuffle(prev => !prev)}} className={`cursor-pointer ${isShuffle && 'text-green-600'}`} title='Bật phát ngẫu nhiên'><CiShuffle size={24}/></span>
             <span className={`${!album ? 'text-gray-500': 'cursor-pointer'}`} onClick={handlePreviousSong}><MdSkipPrevious size={24}/></span>
             <span 
               className='p-2 rounded-full border border-gray-700 hover:text-main-500 cursor-pointer'
@@ -143,7 +166,7 @@ const Player = () => {
              {isPlay ?  <FaPause size={16}/> : <FaPlay size={16}/>}
             </span>
             <span className={`${!album ? 'text-gray-500': 'cursor-pointer'}`} onClick={handleNextSong}><MdSkipNext size={24}/></span>
-            <span className='cursor-pointer' title='Bật phát lại tất cả'><CiRepeat size={24}/></span>
+            <span onClick={()=> {setIsShuffle(false); setIsNextSong(prev => !prev)}} className={`cursor-pointer ${isNextSong && 'text-green-600'}`} title='Bật phát lại tất cả'><CiRepeat size={24}/></span>
           </div>
           <div className='w-full flex justify-around items-center text-xs'>
             <span>{moment.utc(start * 1000).format('mm:ss')}</span>

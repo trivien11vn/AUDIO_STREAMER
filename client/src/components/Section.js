@@ -1,9 +1,10 @@
 import React, { memo } from 'react'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 const Section = () => {
     const {chill} = useSelector(state => state.app)
-    console.log(chill)
+    const navigate = useNavigate()
   return (
     <div className='mt-12 px-[59px] flex flex-col gap-5'>
         <div className='flex items-center justify-between'>
@@ -12,10 +13,18 @@ const Section = () => {
         </div>
         <div className='flex items-center justify-between gap-[28px]'>
             {chill?.items?.slice(0,5)?.map(el=>(
-                <div key={el?.encodeId} className='flex flex-col gap-2 flex-auto w-1/5 text-sm'>
+                <div 
+                    onClick={() => {
+                        const path = el?.link?.split('.')[0]
+                        navigate(path)
+                    }}      
+                    key={el?.encodeId} 
+                    className='flex flex-col gap-3 flex-auto w-1/5 text-sm cursor-pointer'>
                     <img src={el?.thumbnailM} alt='image-chill' className='w-full h-auto rounded-lg'/>
-                    <span className='font-semibold line-clamp-1'>{el?.title}</span>
-                    <span className='line-clamp-1'>{el?.sortDescription}</span>
+                    <span className='flex flex-col'>
+                        <span className='font-semibold line-clamp-1'>{el?.title}</span>
+                        <span className='line-clamp-1'>{el?.sortDescription}</span>
+                    </span>
                 </div>
             ))}
         </div>

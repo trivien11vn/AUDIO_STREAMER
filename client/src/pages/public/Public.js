@@ -8,7 +8,7 @@ const Public = () => {
         <div className='w-[240px] h-full flex-none'>
           <LeftSidebar />
         </div>
-        <div className='flex-auto w-fit h-fit'>
+        <div className='flex-auto'>
           <div className='h-[70px] px-[59px] flex items-center'>
             <Header />
           </div>
