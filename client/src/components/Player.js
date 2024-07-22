@@ -6,7 +6,7 @@ import { playSong, setCurrentSongId } from '../store/actions';
 import moment from 'moment';
 import {toast} from 'react-toastify'
 
-const {GoHeart, GoHeartFill, TbDots, MdSkipNext, MdSkipPrevious, CiRepeat, CiShuffle, FaPlay, FaPause} = icons
+const {GoHeart, GoHeartFill, TbDots, MdSkipNext, MdSkipPrevious, CiRepeat, CiShuffle, FaPlay, FaPause, LuRepeat, LuRepeat1, LuShuffle} = icons
 const Player = () => {
     var intervalId 
     const dispatch = useDispatch()
@@ -15,7 +15,7 @@ const Player = () => {
     const [songInfo, setSongInfo] = useState(null)
     const [start, setStart] = useState(0)
     const [isShuffle, setIsShuffle] = useState(false)
-    const [isNextSong, setIsNextSong] = useState(false)
+    const [isNextSong, setIsNextSong] = useState(0)
     
     const thumbRef = useRef()
     const trackRef = useRef()
@@ -68,7 +68,7 @@ const Player = () => {
           handleSuffle()
         }
         else if (isNextSong){
-          handleNextSong()
+          isNextSong === 1 ? handleRepeatSong() : handleNextSong()
         }
         else{
           audio.pause()
@@ -81,6 +81,11 @@ const Player = () => {
       }
     }, [audio, isNextSong, isShuffle])
     
+
+    const handleRepeatSong = () => {
+      console.log('repeat')
+      audio.play()
+    }
     const handlChangeState = async() => {
       if(isPlay){
         audio.pause()
@@ -137,7 +142,6 @@ const Player = () => {
   }
 
   const handleSuffle = () => {
-    setIsShuffle(prev => !prev)
     const randomIndex = Math.ceil(Math.random() * album?.length) - 1
     dispatch(setCurrentSongId(album[randomIndex].encodeId))
     dispatch(playSong(true))
@@ -158,7 +162,7 @@ const Player = () => {
         </div>
         <div className='w-[40%] flex-auto flex flex-col items-center justify-center gap-2 py-2'>
           <div className='flex gap-8 justify-center items-center'>
-            <span onClick={() =>{setIsNextSong(false); setIsShuffle(prev => !prev)}} className={`cursor-pointer ${isShuffle && 'text-green-600'}`} title='Bật phát ngẫu nhiên'><CiShuffle size={24}/></span>
+            <span onClick={() =>{setIsNextSong(0); setIsShuffle(prev => !prev)}} className={`cursor-pointer ${isShuffle && 'text-green-600'}`} title='Bật phát ngẫu nhiên'><LuShuffle size={24}/></span>
             <span className={`${!album ? 'text-gray-500': 'cursor-pointer'}`} onClick={handlePreviousSong}><MdSkipPrevious size={24}/></span>
             <span 
               className='p-2 rounded-full border border-gray-700 hover:text-main-500 cursor-pointer'
@@ -166,7 +170,26 @@ const Player = () => {
              {isPlay ?  <FaPause size={16}/> : <FaPlay size={16}/>}
             </span>
             <span className={`${!album ? 'text-gray-500': 'cursor-pointer'}`} onClick={handleNextSong}><MdSkipNext size={24}/></span>
-            <span onClick={()=> {setIsShuffle(false); setIsNextSong(prev => !prev)}} className={`cursor-pointer ${isNextSong && 'text-green-600'}`} title='Bật phát lại tất cả'><CiRepeat size={24}/></span>
+            <span 
+              onClick={()=> {setIsShuffle(false); setIsNextSong(prev => {
+                console.log(prev)
+                if(prev === 0 ){
+                  console.log('000')
+                  return 2
+                }
+                else if(prev === 2){
+                  return 1
+                }
+                else{
+                  return 0
+                }
+              })}} 
+              className={`cursor-pointer ${isNextSong !== 0 && 'text-green-600'}`} 
+              title='Bật phát lại tất cả'>
+                {
+                  isNextSong === 1 ? <LuRepeat1 size={24}/> : <LuRepeat size={24}/>
+                }
+              </span>
           </div>
           <div className='w-full flex justify-around items-center text-xs'>
             <span>{moment.utc(start * 1000).format('mm:ss')}</span>

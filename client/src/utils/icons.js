@@ -15,6 +15,9 @@ import { CiShuffle } from "react-icons/ci";
 import { FaPlay } from "react-icons/fa";
 import { FaPause } from "react-icons/fa";
 import { FaMusic } from "react-icons/fa";
+import { LuRepeat } from "react-icons/lu";
+import { LuRepeat1 } from "react-icons/lu";
+import { LuShuffle } from "react-icons/lu";
 
 const icons = {
     MdOutlineLibraryMusic,
@@ -33,7 +36,10 @@ const icons = {
     CiShuffle,
     FaPlay,
     FaPause,
-    FaMusic
+    FaMusic,
+    LuRepeat,
+    LuRepeat1,
+    LuShuffle
 }
 
 export default icons
