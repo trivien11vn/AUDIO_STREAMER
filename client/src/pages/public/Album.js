@@ -2,12 +2,16 @@ import React, {useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom'
 import {apiGetDetailPlaylist} from '../../apis'
 import moment from 'moment';
-import { ListSong } from '../../components';
+import { AudioSpinner, ListSong } from '../../components';
 import { Scrollbars } from 'react-custom-scrollbars-2';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getSongsInAlbum } from '../../store/actions';
+import clsx from 'clsx';
+import icons from '../../utils/icons';
 
 const Album = () => {
+  const {FaPlay} = icons
+  const {currentSongId, isPlay, album} = useSelector(state => state.music)
   const {plid} = useParams()
   const [playlist, setPlaylist] = useState(null)
   const dispatch = useDispatch()
@@ -25,7 +29,18 @@ const Album = () => {
   return (
       <div className='flex gap-8 w-full h-full px-[59px]'>
         <div className='flex-none w-1/4 flex flex-col items-center gap-2'>
-          <img src={playlist?.thumbnailM} alt='thumbnail' className='w-full object-contain rounded-md shadow-md'></img>
+          <div className='w-full relative overflow-hidden'>
+            <img 
+              src={playlist?.thumbnailM} 
+              alt='thumbnail' 
+              className={clsx('w-full object-contain shadow-md', isPlay ? 'rounded-full animate-rotate-center' : 'rounded-md animate-rotate-center-pause')}
+            />
+            <div className={clsx('absolute inset-0 hover:bg-overlay-30 cursor-pointer text-white flex items-center justify-center', isPlay && 'hover:rounded-full')}>
+              <span className='border border-white rounded-full p-3'>
+                {isPlay ? <AudioSpinner /> : <FaPlay size={30}/>}
+              </span>
+            </div>
+          </div>
           <div className='flex flex-col gap-1 items-center'>
             <h3 className='text-[20px] font-bold text-center text-gray-800'>{playlist?.title}</h3>
             <span className='flex gap-2 items-center text-gray-500 text-xs'>
