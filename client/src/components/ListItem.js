@@ -2,7 +2,7 @@ import React, { memo } from 'react'
 import icons from '../utils/icons'
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
-import { playSong, setCurrentSongId } from '../store/actions';
+import { playSong, setAlbum, setCurrentSongId } from '../store/actions';
 
 const {FaMusic} = icons
 const ListItem = ({songData}) => {
@@ -13,6 +13,7 @@ const ListItem = ({songData}) => {
       onClick={() => {
           dispatch(setCurrentSongId(songData?.encodeId)); 
           dispatch(playSong(true));
+          dispatch(setAlbum(true))
           }}
       className='flex justify-between items-center p-[10px] border-t border-[rgba(0,0,0,0.05)] hover:bg-[#DDE4E4] cursor-pointer'>
         <div className='flex items-center gap-3 flex-1'>

@@ -2,7 +2,7 @@ import React, {useEffect, useState, useRef} from 'react'
 import { useSelector, useDispatch} from 'react-redux'
 import { apiGetDetailSong, apiGetInfoSong } from '../apis';
 import icons from '../utils/icons';
-import { playSong } from '../store/actions';
+import { playSong, setCurrentSongId } from '../store/actions';
 import moment from 'moment';
 import {toast} from 'react-toastify'
 
@@ -11,9 +11,10 @@ const Player = () => {
     var intervalId 
     const dispatch = useDispatch()
     const [audio, setAudio] = useState(new Audio())
-    const {currentSongId, isPlay} = useSelector(state => state.music)
+    const {currentSongId, isPlay, album} = useSelector(state => state.music)
     const [songInfo, setSongInfo] = useState(null)
     const [start, setStart] = useState(0)
+    const [isShuffle, setIsShuffle] = useState(false)
     
     const thumbRef = useRef()
     const trackRef = useRef()
@@ -33,7 +34,7 @@ const Player = () => {
           setAudio(new Audio(res2?.data?.data['128']))
         }
         else{
-            console.log('audio is empty')
+            audio.pause()
             dispatch(playSong(false))
             setAudio(new Audio())
             toast.warn(res2?.data?.msg)
@@ -45,15 +46,11 @@ const Player = () => {
     }, [currentSongId]);
 
     useEffect(() => {
-        console.log('pauseee')
-        audio.pause()
         audio.load()
         audio.currentTime = 0
         if(isPlay){
-            console.log('playyyy')
             audio.play()
-            intervalId = setInterval(() => { 
-                console.log(audio.currentTime)
+            intervalId = setInterval(() => {
                 let percent = Math.round(audio.currentTime * 10000 / songInfo?.duration) / 100
                 thumbRef.current.style.cssText = `right: ${100 - percent}%`
                 setStart(Math.round(audio.currentTime))
@@ -78,11 +75,51 @@ const Player = () => {
     const handleProgressBar = (e) => {
         const trackRect = trackRef?.current?.getBoundingClientRect()
         const percent = Math.round((e.clientX - trackRect.left) * 10000/trackRect.width ) / 100
-        console.log(percent)
         thumbRef.current.style.cssText = `right: ${100 - percent}%`
         audio.currentTime = percent * songInfo.duration /100
         setStart(Math.round(audio.currentTime))
     }
+
+  const handleNextSong = () => {
+    if(album){
+      let currentIndex
+      album?.forEach((item, index) => {
+        if(item?.encodeId === currentSongId){
+          currentIndex = index
+        }
+      })
+      if(currentIndex === album?.length -1){
+        dispatch(setCurrentSongId(album[0].encodeId))
+      }
+      else {
+        dispatch(setCurrentSongId(album[currentIndex+1].encodeId))
+      }
+      dispatch(playSong(true))
+    }
+  }
+
+  const handlePreviousSong = () => {
+    if(album){
+      let currentIndex
+      album?.forEach((item, index) => {
+        if(item?.encodeId === currentSongId){
+          currentIndex = index
+        }
+      })
+      if(currentIndex === 0){
+        dispatch(setCurrentSongId(album[album.length - 1].encodeId))
+      }
+      else {
+        dispatch(setCurrentSongId(album[currentIndex-1].encodeId))
+      }
+      dispatch(playSong(true))
+    }
+  }
+
+  const handleSuffle = () => {
+
+  }
+
   return (
     <div className='bg-main-400 px-5 h-full flex'>
         <div className='w-[30%] flex-auto flex gap-3 items-center'>
@@ -98,14 +135,14 @@ const Player = () => {
         </div>
         <div className='w-[40%] flex-auto flex flex-col items-center justify-center gap-2 py-2'>
           <div className='flex gap-8 justify-center items-center'>
-            <span className='cursor-pointer' title='Bật phát ngẫu nhiên'><CiShuffle size={24}/></span>
-            <span className='cursor-pointer'><MdSkipPrevious size={24}/></span>
+            <span onClick={() => setIsShuffle(prev => !prev)} className={`cursor-pointer ${isShuffle && 'text-purple-600'}`} title='Bật phát ngẫu nhiên'><CiShuffle size={24}/></span>
+            <span className={`${!album ? 'text-gray-500': 'cursor-pointer'}`} onClick={handlePreviousSong}><MdSkipPrevious size={24}/></span>
             <span 
               className='p-2 rounded-full border border-gray-700 hover:text-main-500 cursor-pointer'
               onClick={handlChangeState}>
              {isPlay ?  <FaPause size={16}/> : <FaPlay size={16}/>}
             </span>
-            <span className='cursor-pointer'><MdSkipNext size={24}/></span>
+            <span className={`${!album ? 'text-gray-500': 'cursor-pointer'}`} onClick={handleNextSong}><MdSkipNext size={24}/></span>
             <span className='cursor-pointer' title='Bật phát lại tất cả'><CiRepeat size={24}/></span>
           </div>
           <div className='w-full flex justify-around items-center text-xs'>

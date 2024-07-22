@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch} from 'react-redux'
 import { getArrSlider } from '../utils/fn'
-import {playSong, setCurrentSongId} from '../store/actions'
+import {getSongsInAlbum, playSong, setAlbum, setCurrentSongId} from '../store/actions'
 import { useNavigate } from 'react-router-dom'
 
 const Slider = () => {
@@ -63,12 +63,16 @@ const Slider = () => {
 
     const handleClickBanner = (el) => {
       if(el?.type === 1){
+        dispatch(getSongsInAlbum(null))
         dispatch(setCurrentSongId(el?.encodeId))
         dispatch(playSong(true))
       }
       else if(el?.type === 4){
         const path = el?.link?.split('.')[0]
         navigate(path)
+      }
+      else{
+        dispatch(getSongsInAlbum(null))
       }
     }
     

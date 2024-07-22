@@ -4,15 +4,20 @@ import {apiGetDetailPlaylist} from '../../apis'
 import moment from 'moment';
 import { ListSong } from '../../components';
 import { Scrollbars } from 'react-custom-scrollbars-2';
+import { useDispatch } from 'react-redux';
+import { getSongsInAlbum } from '../../store/actions';
 
 const Album = () => {
   const {plid} = useParams()
   const [playlist, setPlaylist] = useState(null)
+  const dispatch = useDispatch()
+
   useEffect(() => {
     const fetchDetailPlaylist = async() => {
       const response = await apiGetDetailPlaylist(plid)
       if(response?.data?.err === 0){
         setPlaylist(response?.data?.data)
+        dispatch(getSongsInAlbum(response?.data?.data?.song?.items))
       }
     }
     fetchDetailPlaylist()
@@ -42,7 +47,7 @@ const Album = () => {
               <span>{playlist?.sortDescription}</span>
             </span>
             <div>
-              <ListSong song={playlist?.song?.items} totalDuration = {playlist?.song?.totalDuration}/>
+              <ListSong totalDuration = {playlist?.song?.totalDuration}/>
             </div>
           </div>
         </Scrollbars>
