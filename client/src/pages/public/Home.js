@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import { Header, Slider} from '../../components'
+import { Slider, Section} from '../../components'
 import { getHome } from '../../apis'
 
 const Home = () => {
@@ -8,6 +8,7 @@ const Home = () => {
   return (
     <div className='overflow-y-auto w-full'>
       <Slider />
+      <Section />
     </div>
   )
 }

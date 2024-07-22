@@ -4,7 +4,7 @@ export const apiGetHome = () => new Promise(async(resolve, reject) => {
     try{
         const response = await axios({
             url: '/home',
-            method: 'get'
+            method: 'get',
         })
         resolve(response)
     }
