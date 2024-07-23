@@ -5,9 +5,10 @@ import icons from '../utils/icons';
 import { playSong, setCurrentSongId } from '../store/actions';
 import moment from 'moment';
 import {toast} from 'react-toastify'
+import {LoadingSong} from './'
 
-const {GoHeart, GoHeartFill, TbDots, MdSkipNext, MdSkipPrevious, CiRepeat, CiShuffle, FaPlay, FaPause, LuRepeat, LuRepeat1, LuShuffle} = icons
-const Player = () => {
+const {GoHeart, GoHeartFill, TbDots, MdSkipNext, MdSkipPrevious, CiRepeat, CiShuffle, FaPlay, FaPause, LuRepeat, LuRepeat1, LuShuffle, BsMusicNoteList, SlVolumeOff, SlVolume1, SlVolume2} = icons
+const Player = ({setIsDisplay}) => {
     var intervalId 
     const dispatch = useDispatch()
     const [audio, setAudio] = useState(new Audio())
@@ -16,16 +17,20 @@ const Player = () => {
     const [start, setStart] = useState(0)
     const [isShuffle, setIsShuffle] = useState(false)
     const [isNextSong, setIsNextSong] = useState(0)
+    const [isLoaded, setIsLoaded] = useState(true)
+    const [volume, setVolume] = useState(100)
     
     const thumbRef = useRef()
     const trackRef = useRef()
 
     useEffect(() => {
       const fetchSong = async() => {
+        setIsLoaded(false)
         const [res1, res2] = await Promise.all([
           apiGetInfoSong(currentSongId),
           apiGetDetailSong(currentSongId),
         ])
+        setIsLoaded(true)
         if(res1?.data?.err === 0){
           setSongInfo(res1?.data?.data)
           setStart(0)
@@ -145,7 +150,11 @@ const Player = () => {
     const randomIndex = Math.ceil(Math.random() * album?.length) - 1
     dispatch(setCurrentSongId(album[randomIndex].encodeId))
     dispatch(playSong(true))
-  }
+  } 
+
+  useEffect(() => {
+    audio.volume = volume / 100
+  }, [volume]);
 
   return (
     <div className='bg-main-400 px-5 h-full flex'>
@@ -167,7 +176,7 @@ const Player = () => {
             <span 
               className='p-2 rounded-full border border-gray-700 hover:text-main-500 cursor-pointer'
               onClick={handlChangeState}>
-             {isPlay ?  <FaPause size={16}/> : <FaPlay size={16}/>}
+              {!isLoaded ? <LoadingSong /> : isPlay ?  <FaPause size={16}/> : <FaPlay size={16}/>}
             </span>
             <span className={`${!album ? 'text-gray-500': 'cursor-pointer'}`} onClick={handleNextSong}><MdSkipNext size={24}/></span>
             <span 
@@ -203,7 +212,28 @@ const Player = () => {
             <span>{moment.utc(songInfo?.duration*1000).format('mm:ss')}</span>
           </div>
         </div>
-        <div className='w-[30%] flex-auto border border-red-500'>Volumn</div>
+        <div className='w-[30%] flex-auto flex items-center justify-end gap-4'>
+          <div className='flex gap-2 items-center'>
+            <span
+              onClick={()=>setVolume(prev => +prev=== 0 ? 70 : 0)}>
+              {+volume >=50 ? <SlVolume2 size={20}/> : +volume === 0 ? <SlVolumeOff size={20}/> : <SlVolume1 size={20}/>}
+            </span>
+            <input
+              type='range'
+              step={1}
+              min={0}
+              max={100} 
+              value={volume}
+              onChange={(e)=> setVolume(e.target.value)}
+            />
+          </div>
+          <span 
+            onClick={() => setIsDisplay(prev => !prev)}
+            className='p-1 rounded-sm bg-main-500 opacity-90 hover:opacity-100 cursor-pointer'
+          >
+              <BsMusicNoteList size={20}/>
+          </span>
+        </div>
     </div>
   )
 }

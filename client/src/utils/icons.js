@@ -18,7 +18,10 @@ import { FaMusic } from "react-icons/fa";
 import { LuRepeat } from "react-icons/lu";
 import { LuRepeat1 } from "react-icons/lu";
 import { LuShuffle } from "react-icons/lu";
-
+import { BsMusicNoteList } from "react-icons/bs";
+import { SlVolumeOff } from "react-icons/sl";
+import { SlVolume2 } from "react-icons/sl";
+import { SlVolume1 } from "react-icons/sl";
 const icons = {
     MdOutlineLibraryMusic,
     FiDisc,
@@ -39,7 +42,11 @@ const icons = {
     FaMusic,
     LuRepeat,
     LuRepeat1,
-    LuShuffle
+    LuShuffle,
+    BsMusicNoteList,
+    SlVolumeOff,
+    SlVolume2,
+    SlVolume1
 }
 
 export default icons
