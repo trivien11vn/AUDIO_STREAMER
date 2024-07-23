@@ -29,6 +29,13 @@ export const getSongsInAlbum = (album) => {
     }
 }
 
+export const setLoading = (flag) => {
+    return {
+        type: actionType.LOADING,
+        flag
+    }
+}
+
 // export const fetchDetailAlbum = (plid) => async(dispatch) => {
 //     try{
 //         const response = await apiGetDetailPlaylist(plid)

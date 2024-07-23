@@ -5,20 +5,23 @@ import moment from 'moment';
 import { AudioSpinner, ListSong } from '../../components';
 import { Scrollbars } from 'react-custom-scrollbars-2';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSongsInAlbum } from '../../store/actions';
+import { getSongsInAlbum, setLoading } from '../../store/actions';
 import clsx from 'clsx';
 import icons from '../../utils/icons';
 
 const Album = () => {
   const {FaPlay} = icons
-  const {currentSongId, isPlay, album} = useSelector(state => state.music)
+  const {isPlay} = useSelector(state => state.music)
   const {plid} = useParams()
   const [playlist, setPlaylist] = useState(null)
   const dispatch = useDispatch()
 
   useEffect(() => {
     const fetchDetailPlaylist = async() => {
+      dispatch(setLoading(true))
       const response = await apiGetDetailPlaylist(plid)
+      dispatch(setLoading(false))
+
       if(response?.data?.err === 0){
         setPlaylist(response?.data?.data)
         dispatch(getSongsInAlbum(response?.data?.data?.song?.items))
@@ -27,7 +30,7 @@ const Album = () => {
     fetchDetailPlaylist()
   }, [plid]);
   return (
-      <div className='flex gap-8 w-full h-full px-[59px]'>
+      <div className='flex gap-8 w-full h-full px-[59px] relative animate-scale-up-center'>
         <div className='flex-none w-1/4 flex flex-col items-center gap-2'>
           <div className='w-full relative overflow-hidden'>
             <img 

@@ -4,6 +4,8 @@ const actionType = {
     PLAY_SONG: 'PLAY_SONG',
     SET_ALBUM: 'SET_ALBUM',
     GET_ALBUM: 'GET_ALBUM',
+
+    LOADING: 'LOADING'
 }
 
 export default actionType

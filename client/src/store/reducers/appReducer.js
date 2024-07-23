@@ -1,7 +1,13 @@
 import actionType from '../actions/actionType'
 const initState = {
     banner: [],
-    chill: {}
+    chill: {},
+    season: {},
+    mood: {},
+    top100: {},
+    albumHot: {},
+    isLoading: false,
+    newRelease: {}
 }
 
 const appReducer = (state = initState, action) => {
@@ -12,6 +18,16 @@ const appReducer = (state = initState, action) => {
                 ...state,
                 banner: action?.homeData?.find(item => item?.sectionId === 'hSlider')?.items || null,
                 chill: action?.homeData?.find(item => item?.sectionId === 'hEditorTheme') || {},
+                season: action?.homeData?.find(item => item?.sectionId === 'hSeasonTheme') || {},
+                mood: action?.homeData?.find(item => item?.sectionId === 'hEditorTheme4') || {},
+                top100: action?.homeData?.find(item => item?.sectionId === 'h100') || {},
+                albumHot: action?.homeData?.find(item => item?.sectionId === 'hAlbum') || {},
+                newRelease: action?.homeData?.find(item => item?.sectionType === 'new-release') || {},
+            }
+        case actionType.LOADING:
+            return {
+                ...state,
+                isLoading: action?.flag
             }
     
         default:
