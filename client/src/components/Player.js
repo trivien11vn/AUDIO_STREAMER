@@ -67,8 +67,6 @@ const Player = ({setIsDisplay}) => {
 
     useEffect(() => {
       const handleEnded = () => {
-        console.log('end')
-        console.log({isNextSong, isShuffle})
         if(isShuffle){
           handleSuffle()
         }
@@ -88,7 +86,6 @@ const Player = ({setIsDisplay}) => {
     
 
     const handleRepeatSong = () => {
-      console.log('repeat')
       audio.play()
     }
     const handlChangeState = async() => {
@@ -181,9 +178,7 @@ const Player = ({setIsDisplay}) => {
             <span className={`${!album ? 'text-gray-500': 'cursor-pointer'}`} onClick={handleNextSong}><MdSkipNext size={24}/></span>
             <span 
               onClick={()=> {setIsShuffle(false); setIsNextSong(prev => {
-                console.log(prev)
                 if(prev === 0 ){
-                  console.log('000')
                   return 2
                 }
                 else if(prev === 2){

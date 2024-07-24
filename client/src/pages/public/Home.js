@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom'
 
 const Home = () => {
   const {chill, season, mood, top100, albumHot, weekChart} = useSelector(state => state.app)
-  console.log(weekChart)
   
   return (
     <div className='overflow-y-auto w-full'>

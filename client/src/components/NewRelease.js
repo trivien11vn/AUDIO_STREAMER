@@ -4,11 +4,9 @@ import { useSelector } from 'react-redux'
 import SongItem from './SongItem'
 const NewRelease = () => {
     const {newRelease} = useSelector(state => state.app)
-    console.log(newRelease)
     const [isActive, setIsActive] = useState(0)
     const [songs, setSongs] = useState([])
     useEffect(() => {
-        console.log(isActive)
         if(isActive === 0 ){
             setSongs(newRelease?.items?.vPop)
         }

@@ -8,6 +8,7 @@ export {default as ListSong} from './ListSong'
 export {default as ListItem} from './ListItem'
 
 export {default as Section} from './Section'
+export {default as SectionItem} from './SectionItem'
 export {default as AudioSpinner} from './AudioSpinner'
 export {default as LoadingSong} from './LoadingSong'
 export {default as Loading} from './Loading'

@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import {apiGetDetailPlaylist} from '../../apis'
 import moment from 'moment';
 import { AudioSpinner, ListSong } from '../../components';
 import { Scrollbars } from 'react-custom-scrollbars-2';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSongsInAlbum, setLoading } from '../../store/actions';
+import { getSongsInAlbum, playSong, setCurrentSongId, setLoading } from '../../store/actions';
 import clsx from 'clsx';
 import icons from '../../utils/icons';
 
@@ -15,6 +15,16 @@ const Album = () => {
   const {plid} = useParams()
   const [playlist, setPlaylist] = useState(null)
   const dispatch = useDispatch()
+  const location = useLocation()
+  console.log(location)
+
+  useEffect(() => {
+    if(location?.state?.playAlbum){
+      const randomSongIndex = Math.ceil(Math.random() * playlist?.song?.items?.length) - 1
+      dispatch(setCurrentSongId(playlist?.song?.items[randomSongIndex]?.encodeId))
+      dispatch(playSong(true))
+    }
+  }, [playlist, plid]);
 
   useEffect(() => {
     const fetchDetailPlaylist = async() => {

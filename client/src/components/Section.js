@@ -1,9 +1,7 @@
-import React, { memo } from 'react'
-import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import React, { memo, useState } from 'react'
+import {SectionItem} from './'
 
 const Section = ({data}) => {
-    const navigate = useNavigate()
   return (
     <div className='mt-12 px-[59px] flex flex-col gap-5'>
         <div className='flex items-center justify-between'>
@@ -12,19 +10,7 @@ const Section = ({data}) => {
         </div>
         <div className='flex items-center justify-between gap-[28px]'>
             {data?.items?.slice(0,5)?.map(el=>(
-                <div 
-                    onClick={() => {
-                        const path = el?.link?.split('.')[0]
-                        navigate(path)
-                    }}      
-                    key={el?.encodeId} 
-                    className='flex flex-col gap-3 flex-auto w-1/5 text-sm cursor-pointer'>
-                    <img src={el?.thumbnailM} alt='image-chill' className='w-full h-auto rounded-lg'/>
-                    <span className='flex flex-col'>
-                        <span className='font-semibold line-clamp-1'>{el?.title}</span>
-                        {data?.sectionId === 'h100' ? <span className='line-clamp-1'>{el?.artistsNames}</span> : <span className='line-clamp-1'>{el?.sortDescription}</span>}
-                    </span>
-                </div>
+                <SectionItem key={data?.encodeId} data={el} dataa={data}/>
             ))}
         </div>
     </div>
