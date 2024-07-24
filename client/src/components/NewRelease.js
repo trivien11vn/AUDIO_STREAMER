@@ -45,7 +45,9 @@ const NewRelease = () => {
                     title={el?.title}
                     artists={el?.artistsNames}
                     release={el?.releaseDate}
-                    key={el?.encodeId}/>
+                    key={el?.encodeId}
+                    sid={el?.encodeId}
+                    />
             ))}
         </div>
     </div>
