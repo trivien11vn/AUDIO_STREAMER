@@ -13,6 +13,8 @@ export {default as AudioSpinner} from './AudioSpinner'
 export {default as LoadingSong} from './LoadingSong'
 export {default as Loading} from './Loading'
 export {default as SongItem} from './SongItem'
+export {default as ChartMusic} from './ChartMusic'
+
 
 export {default as NewRelease} from './NewRelease'
 export {default as Button} from './Button'

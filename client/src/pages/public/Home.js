@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import { Slider, Section, NewRelease} from '../../components'
+import { Slider, Section, NewRelease, ChartMusic} from '../../components'
 import { getHome } from '../../apis'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -15,6 +15,7 @@ const Home = () => {
       <Section data={season}/>
       <Section data={mood}/>
       <Section data={top100}/>
+      <ChartMusic />
       <div className='flex items-center px-[43px] w-full mt-12'>
         {weekChart?.map(item => (
           <Link to={item?.link?.split('.')[0]} key={item?.link} className='flex-1 px-4'>
