@@ -8,6 +8,20 @@ export const setCurrentSongId = (sid) => {
     }
 }
 
+export const setCurrentSongData = (data) => {
+    return {
+        type: actionType.SET_CURRENT_SONG_DATA,
+        data
+    }
+}
+
+export const setCurrentAlbumId = (plid) => {
+    return {
+        type: actionType.SET_CURRENT_ALBUM_ID,
+        plid
+    }
+}
+
 export const playSong = (flag) => {
     return {
         type: actionType.PLAY_SONG,

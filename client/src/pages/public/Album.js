@@ -5,7 +5,7 @@ import moment from 'moment';
 import { AudioSpinner, ListSong } from '../../components';
 import { Scrollbars } from 'react-custom-scrollbars-2';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSongsInAlbum, playSong, setCurrentSongId, setLoading } from '../../store/actions';
+import { getSongsInAlbum, playSong, setCurrentAlbumId, setCurrentSongId, setLoading } from '../../store/actions';
 import clsx from 'clsx';
 import icons from '../../utils/icons';
 
@@ -27,6 +27,7 @@ const Album = () => {
   }, [playlist, plid]);
 
   useEffect(() => {
+    dispatch(setCurrentAlbumId(plid))
     const fetchDetailPlaylist = async() => {
       dispatch(setLoading(true))
       const response = await apiGetDetailPlaylist(plid)

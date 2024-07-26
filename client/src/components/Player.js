@@ -2,7 +2,7 @@ import React, {useEffect, useState, useRef} from 'react'
 import { useSelector, useDispatch} from 'react-redux'
 import { apiGetDetailSong, apiGetInfoSong } from '../apis';
 import icons from '../utils/icons';
-import { playSong, setCurrentSongId } from '../store/actions';
+import { playSong, setCurrentSongData, setCurrentSongId } from '../store/actions';
 import moment from 'moment';
 import {toast} from 'react-toastify'
 import {LoadingSong} from './'
@@ -33,6 +33,7 @@ const Player = ({setIsDisplay}) => {
         setIsLoaded(true)
         if(res1?.data?.err === 0){
           setSongInfo(res1?.data?.data)
+          dispatch(setCurrentSongData(res1?.data?.data))
           setStart(0)
         }
         if(res2?.data?.err === 0){

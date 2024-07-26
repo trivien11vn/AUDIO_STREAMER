@@ -30,7 +30,7 @@ const Public = () => {
           </div>
         </div>
         {isDisplay &&
-        <div className='w-[329px] flex-none animate-slide-left'>
+        <div className='w-[329px] flex-none animate-slide-left h-screen'>
           <RightSidebar />
         </div>
         }

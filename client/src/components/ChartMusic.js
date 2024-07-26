@@ -99,7 +99,6 @@ const ChartMusic = () => {
       })
     }
   }, [chart]);
-  console.log(selected)
   return (
     <div className='px-[59px] mt-12 relative max-h-[420px] rounded-md'>
       <img src={bgChart} alt='bgChart' className='w-full object-cover rounded-md max-h-[420px]'/>
@@ -121,6 +120,7 @@ const ChartMusic = () => {
                 order={index + 1}
                 percent={`${Math.round(+item?.score * 100 / +chart?.totalScore)}%`}
                 style='text-white bg-[hsla(0,0%,100%,.07)] hover:bg-[#945EA7]'
+                smm
               />
             )}
             <Link to={path?.ZING_CHART} className='text-white px-4 py-2 rounded-l-full rounded-r-full border border-white w-fit m-auto'>Xem thêm</Link>
@@ -141,6 +141,7 @@ const ChartMusic = () => {
                   artists={rank?.find(item => item?.encodeId === selected)?.artistsNames}
                   sid={rank?.find(item => item?.encodeId === selected)?.encodeId}
                   style={'bg-main-200'}
+                  smm
                 />
               </div>
           </div>

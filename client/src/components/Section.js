@@ -10,7 +10,7 @@ const Section = ({data}) => {
         </div>
         <div className='flex items-center justify-between gap-[28px]'>
             {data?.items?.slice(0,5)?.map(el=>(
-                <SectionItem key={data?.encodeId} data={el} dataa={data}/>
+                <SectionItem key={el?.encodeId} data={el} dataa={data}/>
             ))}
         </div>
     </div>
