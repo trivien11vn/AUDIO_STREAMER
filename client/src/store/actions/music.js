@@ -22,6 +22,13 @@ export const setCurrentAlbumId = (plid) => {
     }
 }
 
+export const setRecentSongs = (data) => {
+    return {
+        type: actionType.SET_RECENT,
+        data
+    }
+}
+
 export const playSong = (flag) => {
     return {
         type: actionType.PLAY_SONG,

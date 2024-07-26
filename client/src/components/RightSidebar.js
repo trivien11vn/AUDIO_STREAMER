@@ -10,21 +10,28 @@ const RightSidebar = () => {
   const  {FaRegTrashCan} = icons
   const [isRecent, setIsRecent] = useState(false)
   const [playlist, setPlaylist] = useState(null)
-  const {currentSongData, currentAlbumId, isPlay} = useSelector(state => state.music)
-  console.log(currentSongData)
+  const {currentSongId,currentSongData, currentAlbumId, isPlay, recentSongs} = useSelector(state => state.music)
+
+  const fetchDetailPlaylist = async() => { 
+    const response = await apiGetDetailPlaylist(currentAlbumId)
+    if(response?.data?.err === 0) {
+      setPlaylist(response?.data?.data?.song?.items)
+    }
+   }
+  
+  useEffect(() => {
+    currentAlbumId && fetchDetailPlaylist()
+  }, []);
 
   useEffect(() => {
-    const fetchDetailPlaylist = async() => { 
-      const response = await apiGetDetailPlaylist(currentAlbumId)
-      if(response?.data?.err === 0) {
-        setPlaylist(response?.data?.data?.song?.items)
-      }
-     }
-    
      if(currentAlbumId && isPlay){
       fetchDetailPlaylist()
      }
   }, [currentAlbumId, isPlay])
+
+  useEffect(() => {
+    if(isPlay) setIsRecent(false)
+  }, [currentSongId]);
   
   return (
     <div className='flex flex-col text-xs w-full h-full'>
@@ -37,39 +44,56 @@ const RightSidebar = () => {
           <FaRegTrashCan size={14}/>
         </span>
       </div>
-      <div className='w-full flex flex-col px-2 h-full'>
-        <div >
-        <SongItem 
-          thumbnail={currentSongData?.thumbnail}
-          title={currentSongData?.title}
-          artists={currentSongData?.artistsNames}
-          sid={currentSongData?.encodeId}
-          smm
-          style='bg-main-500 text-white'
-        />
+      {isRecent ? 
+        <div className='w-full flex flex-col px-2 h-full mb-[100px]'>
+        <Scrollbars style={{ width: '100%', height: '100%'}}>
+              {recentSongs && recentSongs?.map(el => (
+                <SongItem 
+                  key={el?.sid}
+                  thumbnail={el?.thumbnail}
+                  title={el?.title}
+                  artists={el?.artists}
+                  sid={el?.sid}
+                  smm
+                />
+              ))}
+            </Scrollbars>
         </div>
-        <div className='flex flex-col text-black pt-[15px] px-2 pb-[5px]'>
-          <span className='text-sm font-bold'>Tiếp theo</span>
-          <span className='opacity-70 text-xs flex gap-1 line-clamp-1'>
-            <span>Từ playlist</span>
-            <span className='font-semibold text-main-500'>{currentSongData?.album?.title}</span>
-          </span>
+        :
+        <div className='w-full flex flex-col px-2 h-full'>
+          <div >
+          <SongItem 
+            thumbnail={currentSongData?.thumbnail}
+            title={currentSongData?.title}
+            artists={currentSongData?.artistsNames}
+            sid={currentSongData?.encodeId}
+            smm
+            style='bg-main-500 text-white'
+          />
+          </div>
+          <div className='flex flex-col text-black pt-[15px] px-2 pb-[5px]'>
+            <span className='text-sm font-bold'>Tiếp theo</span>
+            <span className='opacity-70 text-xs flex gap-1 line-clamp-1'>
+              <span>Từ playlist</span>
+              <span className='font-semibold text-main-500'>{currentSongData?.album?.title}</span>
+            </span>
+          </div>
+          <div className='flex flex-col flex-grow mb-[100px]'>
+            <Scrollbars style={{ width: '100%', height: '100%'}}>
+              {playlist && playlist?.map(el => (
+                <SongItem 
+                  key={el?.encodeId}
+                  thumbnail={el?.thumbnail}
+                  title={el?.title}
+                  artists={el?.artistsNames}
+                  sid={el?.encodeId}
+                  smm
+                />
+              ))}
+            </Scrollbars>
+          </div>  
         </div>
-        <div className='flex flex-col flex-grow mb-[100px]'>
-          <Scrollbars style={{ width: '100%', height: '100%'}}>
-            {playlist && playlist?.map(el => (
-              <SongItem 
-                key={el?.encodeId}
-                thumbnail={el?.thumbnail}
-                title={el?.title}
-                artists={el?.artistsNames}
-                sid={el?.encodeId}
-                smm
-              />
-            ))}
-          </Scrollbars>
-        </div>  
-      </div>
+      }
     </div>
   )
 }
