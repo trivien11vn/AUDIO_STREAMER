@@ -110,7 +110,7 @@ const ChartMusic = () => {
           <span className='p-2 border rounded-full text-green-700 bg-white'><FaPlay/></span>
         </Link>
         <div className='flex gap-4 h-full'>
-          <div className='flex-3 flex flex-col gap-4'>
+          <div className='flex-3 flex flex-col gap-4 h-[90%]'>
             {rank?.slice(0,3)?.map((item, index) => 
               <SongItem 
                 key={item?.encodeId}
@@ -125,7 +125,7 @@ const ChartMusic = () => {
             )}
             <Link to={path?.ZING_CHART} className='text-white px-4 py-2 rounded-l-full rounded-r-full border border-white w-fit m-auto'>Xem thêm</Link>
           </div>
-          <div className='flex-7 h-[90%] relative'>
+          <div className='flex-7 h-[80%] relative w-[75%]'>
             {data &&
               <Line 
                 data={data}
