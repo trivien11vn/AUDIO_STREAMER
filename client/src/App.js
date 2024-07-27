@@ -2,11 +2,12 @@ import { useState } from "react";
 import { ToastContainer, toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import {useSelector, useDispatch} from 'react-redux'
-import { Home, Login, Public, Personal, Album, WeekRank, ZingChart} from "./pages/public";
+import { Home, Login, Public, Personal, Album, WeekRank, ZingChart, SearchSong, Searchh, SearchAll} from "./pages/public";
 import {Route, Routes} from 'react-router-dom'
 import path from "./utils/path";
 import { useEffect } from "react";
 import {getHome} from './store/actions'
+import { Search } from "./components";
 
 
 function App() {
@@ -27,6 +28,10 @@ function App() {
           <Route path={path.PLAYLIST__TITLE__ID} element={<Album />} />
           <Route path={path.WEEKRANK__TITLE__ID} element={<WeekRank />} />
           <Route path={path.ZING_CHART} element={<ZingChart />} />
+          <Route path={path.SEARCH} element={<Searchh />} >
+            <Route path={path.SONG} element={<SearchSong />} />
+            <Route path={path.ALL} element={<SearchAll />} />
+          </Route>
 
           <Route path={path.STAR} element={<Home />} />
         </Route>

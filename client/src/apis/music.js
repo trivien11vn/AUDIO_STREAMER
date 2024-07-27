@@ -42,3 +42,18 @@ export const apiGetDetailPlaylist = (plid) => new Promise(async(resolve, reject)
         reject(error);
     }
 })
+
+export const apiSearch = (keyword) => new Promise(async(resolve, reject) => {
+    console.log(keyword)
+    try{
+        const response = await axios({
+            url: '/search',
+            method: 'get',
+            params: {keyword}  
+        })
+        resolve(response)
+    }
+    catch(error){
+        reject(error);
+    }
+})

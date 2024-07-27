@@ -9,7 +9,10 @@ const path = {
 
     MY_MUSIC: 'mymusic',
     WEEKRANK__TITLE__ID: 'zing-chart-tuan/:title/:plid',
-    ZING_CHART: 'zing-chart'
+    ZING_CHART: 'zing-chart',
+    SEARCH: 'tim-kiem',
+    ALL: 'tat-ca',
+    SONG: 'bai-hat'
 }
 
 export default path
