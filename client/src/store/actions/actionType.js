@@ -8,6 +8,8 @@ const actionType = {
     SET_ALBUM: 'SET_ALBUM',
     GET_ALBUM: 'GET_ALBUM',
 
+    SEARCH: 'SEARCH',
+
     LOADING: 'LOADING'
 }
 

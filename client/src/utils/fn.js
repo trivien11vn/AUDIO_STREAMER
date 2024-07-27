@@ -11,3 +11,17 @@ export const getArrSlider = (start, end, number) => {
     }
     return output
 }
+
+export const handleRound = (number) => {
+    if(+number > 1000000){
+        return `${Math.round(number * 10 / 1000000)/10}M`
+    }
+    else{
+        if(+number > 1000){
+            return `${Math.round(number * 10 / 1000)/10}K`
+        }
+        else{
+            return number
+        }
+    }
+}

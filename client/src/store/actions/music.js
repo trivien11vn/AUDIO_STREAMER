@@ -1,5 +1,5 @@
 import actionType from "./actionType";
-import {apiGetDetailPlaylist, apiGetHome} from '../../apis'
+import {apiGetDetailPlaylist, apiGetHome, apiSearch} from '../../apis'
 
 export const setCurrentSongId = (sid) => {
     return {
@@ -26,6 +26,30 @@ export const setRecentSongs = (data) => {
     return {
         type: actionType.SET_RECENT,
         data
+    }
+}
+
+export const search = (keyword) => async(dispatch) => { 
+    try{
+        const response = await apiSearch(keyword)
+        if(response?.data?.err === 0 ) {
+            dispatch({
+                type: actionType.SEARCH,
+                data: response?.data?.data
+            })
+        }
+        else{
+            dispatch({
+                type: actionType.SEARCH,
+                data: null
+            })
+        }
+    }
+    catch(error){
+        dispatch({
+            type: actionType.SEARCH,
+            data: null
+        })
     }
 }
 
