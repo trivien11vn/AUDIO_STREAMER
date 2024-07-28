@@ -18,3 +18,5 @@ export {default as ChartMusic} from './ChartMusic'
 
 export {default as NewRelease} from './NewRelease'
 export {default as Button} from './Button'
+
+export {default as Artist} from './Artist'

@@ -47,6 +47,7 @@ const NewRelease = () => {
                         artists={el?.artistsNames}
                         release={el?.releaseDate}
                         sid={el?.encodeId}
+                        size={'w-[60px] h-[60px]'}
                         />
                 </div>
             ))}

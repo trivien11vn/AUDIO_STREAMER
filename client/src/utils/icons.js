@@ -23,6 +23,7 @@ import { SlVolumeOff } from "react-icons/sl";
 import { SlVolume2 } from "react-icons/sl";
 import { SlVolume1 } from "react-icons/sl";
 import { FaRegTrashCan } from "react-icons/fa6";
+import { RiUserAddFill } from "react-icons/ri";
 const icons = {
     MdOutlineLibraryMusic,
     FiDisc,
@@ -48,6 +49,7 @@ const icons = {
     SlVolumeOff,
     SlVolume2,
     SlVolume1,
+    RiUserAddFill,
     FaRegTrashCan
 }
 

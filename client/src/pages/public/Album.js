@@ -16,7 +16,6 @@ const Album = () => {
   const [playlist, setPlaylist] = useState(null)
   const dispatch = useDispatch()
   const location = useLocation()
-  console.log(location)
 
   useEffect(() => {
     if(location?.state?.playAlbum){

@@ -54,7 +54,6 @@ const RightSidebar = () => {
                   title={el?.title}
                   artists={el?.artists}
                   sid={el?.sid}
-                  smm
                 />
               ))}
             </Scrollbars>
@@ -67,7 +66,6 @@ const RightSidebar = () => {
             title={currentSongData?.title}
             artists={currentSongData?.artistsNames}
             sid={currentSongData?.encodeId}
-            smm
             style='bg-main-500 text-white'
           />
           </div>
@@ -87,7 +85,6 @@ const RightSidebar = () => {
                   title={el?.title}
                   artists={el?.artistsNames}
                   sid={el?.encodeId}
-                  smm
                 />
               ))}
             </Scrollbars>

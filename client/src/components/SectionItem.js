@@ -9,7 +9,6 @@ const SectionItem = ({data, dataa}) => {
   const imageRef = useRef()
   
   const handleHoverImage = () => {
-    console.log(imageRef.current)
       setIsHover(true)
       imageRef.current.classList?.remove('animate-scale-down-image')
       imageRef.current.classList?.add('animate-scale-up-image')
