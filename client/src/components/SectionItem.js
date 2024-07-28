@@ -15,7 +15,7 @@ const SectionItem = ({data, dataa}) => {
   }
   const handleLeaveImage = () => {
     setIsHover(false)
-    imageRef.current.classList?.remove('animate-scale-add-image')
+    imageRef.current.classList?.remove('animate-scale-up-image')
     imageRef.current.classList?.add('animate-scale-down-image')
 }
   return (

@@ -8,4 +8,5 @@ export {default as ZingChart} from './ZingChart'
 export {default as Searchh} from './Searchh'
 export {default as SearchSong} from './SearchSong'
 export {default as SearchAll} from './SearchAll'
+export {default as Singer} from './Singer'
 

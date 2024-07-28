@@ -62,7 +62,7 @@ const SearchAll = () => {
 
       <div className='flex flex-col w-full'>
         <h3 className='text-lg font-bold mb-5'>Nghệ sĩ</h3>
-        <div className='flex items-center justify-between gap-[28px]'>
+        <div className='flex items-center justify-start gap-[28px]'>
             {searchData?.artists?.slice(0,5)?.map(el=>(
                 <Artist key={el?.id} data={el}/>
             ))}
