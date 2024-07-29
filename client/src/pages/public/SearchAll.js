@@ -44,7 +44,7 @@ const SearchAll = () => {
         <div className='flex flex-wrap justify-between w-full'>
           {searchData?.songs?.map((item, index) => (
             <div key={item?.encodeId} className={clsx('w-[45%] flex-auto', index % 2 === 0 ? 'pr-4' : 'pl-4')}>
-              <ListItem songData={item} isHideAlbum/>
+              <ListItem songData={item} isHideAlbum isHideNode/>
             </div>
           ))}
         </div>

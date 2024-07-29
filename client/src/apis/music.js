@@ -56,3 +56,21 @@ export const apiSearch = (keyword) => new Promise(async(resolve, reject) => {
         reject(error);
     }
 })
+
+export const apiGetArtistSongs = (singerId) => new Promise(async(resolve, reject) => {
+    try{
+        const response = await axios({
+            url: '/artistsong',
+            method: 'get',
+            params: {
+                id: singerId,
+                page: 1,
+                count:50
+            }  
+        })
+        resolve(response)
+    }
+    catch(error){
+        reject(error);
+    }
+})

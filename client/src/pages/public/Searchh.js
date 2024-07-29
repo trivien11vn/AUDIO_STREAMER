@@ -7,7 +7,6 @@ import {useSelector} from 'react-redux'
 
 const Searchh = () => {
   const {keyword} = useSelector(state => state.music)
-  console.log(keyword)
 
   // const [searchParams] = useSearchParams()
 

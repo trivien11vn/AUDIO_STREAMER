@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { playSong, setAlbum, setCurrentSongId, setRecentSongs } from '../store/actions';
 
 const {FaMusic} = icons
-const ListItem = ({songData, isHideAlbum}) => {
+const ListItem = ({songData, isHideAlbum, isHideNode}) => {
   const dispatch = useDispatch()
 
   return (
@@ -25,7 +25,7 @@ const ListItem = ({songData, isHideAlbum}) => {
           }}
       className='flex justify-between items-center p-[10px] border-t border-[rgba(0,0,0,0.05)] hover:bg-[#DDE4E4] cursor-pointer'>
         <div className='flex items-center gap-3 flex-1'>
-            {!isHideAlbum && <span><FaMusic /></span>}
+           {!isHideNode && <span><FaMusic /></span>}
             <img src={songData?.thumbnail} alt='thumbnail' className='w-10 h-10 object-cover border rounded-md'></img>
             <span className='flex flex-col w-full'>
                 <span className='text-sm font-semibold line-clamp-1'>{songData?.title}</span>
