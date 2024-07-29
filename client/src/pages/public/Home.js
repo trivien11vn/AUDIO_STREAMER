@@ -10,20 +10,22 @@ const Home = () => {
   return (
     <div className='overflow-y-auto w-full'>
       <Slider />
-      <Section data={chill}/>
+      {chill && <Section data={chill}/>}
       <NewRelease />
-      <Section data={season}/>
-      <Section data={mood}/>
-      <Section data={top100}/>
+      {season && <Section data={season}/>}
+      {mood && <Section data={mood}/>}
+      {top100 && <Section data={top100}/>}
       <ChartMusic />
-      <div className='flex items-center px-[43px] w-full mt-12'>
+      {weekChart &&
+        <div className='flex items-center px-[43px] w-full mt-12'>
         {weekChart?.map(item => (
           <Link to={item?.link?.split('.')[0]} key={item?.link} className='flex-1 px-4'>
             <img src={item?.cover} alt='cover' className='w-full object-contain rounded-md'/>
           </Link>
         ))}
-      </div>
-      <Section data={albumHot}/>
+        </div>
+      }
+      {albumHot && <Section data={albumHot}/>}
       <div className='w-full h-[500px]'></div>
     </div>
   )

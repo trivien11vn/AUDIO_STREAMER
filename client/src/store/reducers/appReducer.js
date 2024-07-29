@@ -1,16 +1,16 @@
 import actionType from '../actions/actionType'
 const initState = {
-    banner: [],
-    chill: {},
-    season: {},
-    mood: {},
-    top100: {},
-    albumHot: {},
+    banner:null,
+    chill: null,
+    season: null,
+    mood: null,
+    top100: null,
+    albumHot: null,
     isLoading: false,
-    newRelease: {},
-    weekChart: [],
-    chart: {},
-    rank: []
+    newRelease: null,
+    weekChart:null,
+    chart: null,
+    rank:null
 }
 
 const appReducer = (state = initState, action) => {
@@ -20,15 +20,15 @@ const appReducer = (state = initState, action) => {
             return {
                 ...state,
                 banner: action?.homeData?.find(item => item?.sectionId === 'hSlider')?.items || null,
-                chill: action?.homeData?.find(item => item?.sectionId === 'hEditorTheme') || {},
-                season: action?.homeData?.find(item => item?.sectionId === 'hSeasonTheme') || {},
-                mood: action?.homeData?.find(item => item?.sectionId === 'hEditorTheme4') || {},
-                top100: action?.homeData?.find(item => item?.sectionId === 'h100') || {},
-                albumHot: action?.homeData?.find(item => item?.sectionId === 'hAlbum') || {},
-                newRelease: action?.homeData?.find(item => item?.sectionType === 'new-release') || {},
-                weekChart: action?.homeData?.find(item => item?.sectionType === 'weekChart')?.items || {},
-                chart: action?.homeData?.find(item => item?.sectionId === 'hZC')?.chart || {},
-                rank: action?.homeData?.find(item => item?.sectionId === 'hZC')?.items || {},
+                chill: action?.homeData?.find(item => item?.sectionId === 'hEditorTheme') || null,
+                season: action?.homeData?.find(item => item?.sectionId === 'hSeasonTheme') || null,
+                mood: action?.homeData?.find(item => item?.sectionId === 'hEditorTheme4') || null,
+                top100: action?.homeData?.find(item => item?.sectionId === 'h100') || null,
+                albumHot: action?.homeData?.find(item => item?.sectionId === 'hAlbum') || null,
+                newRelease: action?.homeData?.find(item => item?.sectionType === 'new-release') || null,
+                weekChart: action?.homeData?.find(item => item?.sectionType === 'weekChart')?.items || null,
+                chart: action?.homeData?.find(item => item?.sectionId === 'hZC')?.chart || null,
+                rank: action?.homeData?.find(item => item?.sectionId === 'hZC')?.items || null,
             }
         case actionType.LOADING:
             return {
