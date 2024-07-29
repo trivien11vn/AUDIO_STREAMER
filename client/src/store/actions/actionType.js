@@ -10,7 +10,7 @@ const actionType = {
 
     SEARCH: 'SEARCH',
 
-    LOADING: 'LOADING'
+    LOADING: 'LOADING',
 }
 
 export default actionType

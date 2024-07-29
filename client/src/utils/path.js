@@ -15,6 +15,7 @@ const path = {
     SEARCH: 'tim-kiem',
     ALL: 'tat-ca',
     SONG: 'bai-hat',
+    PLAYLIST_SEARCH: 'playlist'
 }
 
 export default path

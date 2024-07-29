@@ -5,7 +5,7 @@ import {useNavigate, createSearchParams} from 'react-router-dom'
 import { search } from '../store/actions/music'
 import path from '../utils/path'
 
-const {FiSearch} = icons
+const {FiSearch, IoIosClose} = icons
 
 const Search = () => {
   const dispatch = useDispatch()
@@ -24,7 +24,11 @@ const Search = () => {
   }
 
   return (
-    <div className='w-full flex items-center'>
+    <div className='w-full flex items-center relative'>
+        {keyword && 
+        <span onClick={()=>{setKeyword('')}} className='absolute right-[16px] cursor-pointer text-gray-700'>
+          <IoIosClose size={24}/>
+        </span>}
         <span className='h-10 pl-4 flex items-center justify-center bg-[#DDE4E4] rounded-l-[20px] text-gray-500'>
           <FiSearch size={24} />
         </span>

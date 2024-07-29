@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ToastContainer, toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import {useSelector, useDispatch} from 'react-redux'
-import { Home, Login, Public, Personal, Album, WeekRank, ZingChart, SearchSong, Searchh, SearchAll, Singer} from "./pages/public";
+import { Home, Login, Public, Personal, Album, WeekRank, ZingChart, SearchSong, Searchh, SearchAll, Singer, SearchAlbum} from "./pages/public";
 import {Route, Routes} from 'react-router-dom'
 import path from "./utils/path";
 import { useEffect } from "react";
@@ -32,6 +32,7 @@ function App() {
           <Route path={path.SEARCH} element={<Searchh />} >
             <Route path={path.SONG} element={<SearchSong />} />
             <Route path={path.ALL} element={<SearchAll />} />
+            <Route path={path.PLAYLIST_SEARCH} element={<SearchAlbum />} />
           </Route>
 
           <Route path={path.STAR} element={<Home />} />

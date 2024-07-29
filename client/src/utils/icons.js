@@ -24,6 +24,7 @@ import { SlVolume2 } from "react-icons/sl";
 import { SlVolume1 } from "react-icons/sl";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { RiUserAddFill } from "react-icons/ri";
+import { IoIosClose } from "react-icons/io";
 const icons = {
     MdOutlineLibraryMusic,
     FiDisc,
@@ -50,7 +51,8 @@ const icons = {
     SlVolume2,
     SlVolume1,
     RiUserAddFill,
-    FaRegTrashCan
+    FaRegTrashCan,
+    IoIosClose
 }
 
 export default icons
