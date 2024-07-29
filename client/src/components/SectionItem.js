@@ -26,7 +26,7 @@ const SectionItem = ({data, dataa}) => {
             state: {playAlbum: false}
           })
       }}      
-      className='flex flex-col gap-3 flex-auto w-1/5 text-sm cursor-pointer'
+      className='flex flex-col gap-3 w-1/5 p-4 text-sm cursor-pointer'
   >
       <div onMouseEnter={handleHoverImage} onMouseLeave={handleLeaveImage} className='w-full relative overflow-hidden rounded-lg'>
           <img ref={imageRef} src={data?.thumbnailM} alt='image-chill' className='w-full h-auto rounded-lg'/>

@@ -74,3 +74,20 @@ export const apiGetArtistSongs = (singerId) => new Promise(async(resolve, reject
         reject(error);
     }
 })
+
+
+export const apiGetArtist = (alias) => new Promise(async(resolve, reject) => {
+    try{
+        const response = await axios({
+            url: '/artist',
+            method: 'get',
+            params: {
+                name: alias
+            }  
+        })
+        resolve(response)
+    }
+    catch(error){
+        reject(error);
+    }
+})
