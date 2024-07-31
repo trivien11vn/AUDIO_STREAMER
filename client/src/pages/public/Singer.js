@@ -18,7 +18,16 @@ const Singer = () => {
   }, [singer]);
   return (
     <div className='flex flex-col w-full'>
-      <img className='mt-[-70px]' src={artistData?.cover} alt='background'></img>
+      <div className='relative'>
+      <img className='h-[400px] w-full object-cover' src={artistData?.cover} alt='background'></img>
+      <div className='absolute inset-0 bg-gradient-to-t from-[rgba(0,0,0,0.5)] to-transparent px-[60px] text-white'>
+        <div className='flex gap-8 items-center'>
+          <h1 className='text-[60px] font-bold'>Name</h1>
+          <span>play</span>
+        </div>
+        <span>Follower</span>
+      </div>
+      </div>
     </div>
   )
 }

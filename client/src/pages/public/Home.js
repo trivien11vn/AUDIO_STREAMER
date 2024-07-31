@@ -9,6 +9,7 @@ const Home = () => {
   
   return (
     <div className='overflow-y-auto w-full'>
+      <div className='w-full h-[70px]'></div>
       <Slider />
       {chill && <Section data={chill}/>}
       <NewRelease />

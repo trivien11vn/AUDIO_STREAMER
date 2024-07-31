@@ -9,7 +9,6 @@ const SearchAlbum = () => {
   useEffect(() => {
     const fetch = async() => {
       const res = await apiGetArtist(searchData?.top?.alias)
-      console.log(res)
       if(res?.data?.err === 0){
         setPlaylist(res?.data?.data?.sections[1])
       }

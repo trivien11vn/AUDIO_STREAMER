@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useParams } from 'react-router-dom'
 import { LeftSidebar, Player, RightSidebar, Header, Loading} from '../../components'
 import { Scrollbars } from 'react-custom-scrollbars-2';
 import { useSelector } from 'react-redux';
-
+import clsx from 'clsx';
 const Public = () => {
   const [isDisplay, setIsDisplay] = useState(true)
   const {isLoading} = useSelector(state => state.app)
+  const {singer} = useParams()
   return (
     <div className='w-full relative h-screen flex flex-col bg-main-300'>
       <div className='w-full h-full flex flex-auto'>
@@ -20,7 +21,7 @@ const Public = () => {
               <Loading />
             </div>
           }
-          <div className='h-[70px] fixed top-0 left-[240px] right-[0px] px-[59px] z-50 flex items-center'>
+          <div className={clsx('h-[70px] fixed top-0 left-[240px] right-[0px] px-[59px] z-50 flex items-center', singer ? 'bg-transparent' : 'bg-main-300')}>
             <Header />
           </div>
           <div className='flex-auto w-full'>

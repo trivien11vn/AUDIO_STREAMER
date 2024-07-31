@@ -31,7 +31,7 @@ const Search = () => {
         <span onClick={()=>{setKeyword('')}} className='absolute right-[16px] cursor-pointer text-gray-700'>
           <IoIosClose size={24}/>
         </span>}
-        <span className={clsx('h-10 pl-4 flex items-center justify-center rounded-l-[20px] text-gray-500', singer ? 'bg-[rgba(0,0,0,0.2)]' : 'bg-[#DDE4E4]' )}>
+        <span className={clsx('h-10 pl-4 flex items-center justify-center rounded-l-[20px] ', singer ? 'bg-[rgba(0,0,0,0.2)] text-white' : 'bg-[#DDE4E4] text-gray-500' )}>
           <FiSearch size={24} />
         </span>
         <input 
@@ -39,7 +39,7 @@ const Search = () => {
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
             onKeyUp={handleSearch}
-            className={clsx('outline-none px-4 py-2 rounded-r-[20px] h-[40px] w-full text-gray-500', singer ? 'bg-[rgba(0,0,0,0.2)]' : 'bg-[#DDE4E4]' )}
+            className={clsx('outline-none px-4 py-2 rounded-r-[20px] h-[40px] w-full ', singer ? 'bg-[rgba(0,0,0,0.2)] text-white placeholder:text-white' : 'bg-[#DDE4E4] text-gray-500' )}
             placeholder='Tìm kiếm bài hát, nghệ sĩ, lời bài hát...'
         />
     </div>
