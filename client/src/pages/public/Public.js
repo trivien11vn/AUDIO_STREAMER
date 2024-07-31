@@ -20,7 +20,7 @@ const Public = () => {
               <Loading />
             </div>
           }
-          <div className='h-[70px] px-[59px] flex items-center flex-none'>
+          <div className='h-[70px] fixed top-0 left-[240px] right-[0px] px-[59px] z-50 flex items-center'>
             <Header />
           </div>
           <div className='flex-auto w-full'>

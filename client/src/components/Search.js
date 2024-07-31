@@ -1,15 +1,17 @@
 import React, { useState, useEffect} from 'react'
 import icons from '../utils/icons'
 import { useDispatch } from 'react-redux'
-import {useNavigate, createSearchParams} from 'react-router-dom'
+import {useNavigate, createSearchParams, useParams} from 'react-router-dom'
 import { search } from '../store/actions/music'
 import path from '../utils/path'
+import clsx from 'clsx'
 
 const {FiSearch, IoIosClose} = icons
 
 const Search = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const {singer} = useParams()
   const [keyword, setKeyword] = useState('')
   const handleSearch = async(e) => {
     if(e?.keyCode === 13){
@@ -29,7 +31,7 @@ const Search = () => {
         <span onClick={()=>{setKeyword('')}} className='absolute right-[16px] cursor-pointer text-gray-700'>
           <IoIosClose size={24}/>
         </span>}
-        <span className='h-10 pl-4 flex items-center justify-center bg-[#DDE4E4] rounded-l-[20px] text-gray-500'>
+        <span className={clsx('h-10 pl-4 flex items-center justify-center rounded-l-[20px] text-gray-500', singer ? 'bg-[rgba(0,0,0,0.2)]' : 'bg-[#DDE4E4]' )}>
           <FiSearch size={24} />
         </span>
         <input 
@@ -37,7 +39,7 @@ const Search = () => {
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
             onKeyUp={handleSearch}
-            className='bg-[#DDE4E4] outline-none px-4 py-2 rounded-r-[20px] h-[40px] w-full text-gray-500'
+            className={clsx('outline-none px-4 py-2 rounded-r-[20px] h-[40px] w-full text-gray-500', singer ? 'bg-[rgba(0,0,0,0.2)]' : 'bg-[#DDE4E4]' )}
             placeholder='Tìm kiếm bài hát, nghệ sĩ, lời bài hát...'
         />
     </div>
