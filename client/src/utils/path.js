@@ -2,7 +2,7 @@ const path = {
     PUBLIC: '/',
     HOME: '',
     HOME__SINGER: ':singer',
-
+    HOME__ARTIST__SINGER: 'nghe-si/:singer',
     LOGIN: 'login',
     STAR: '*',
     ALBUM: 'album',

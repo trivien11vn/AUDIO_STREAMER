@@ -8,7 +8,7 @@ const Section = ({data}) => {
             <h3 className='text-[20px] font-bold pl-4'>{data?.title}</h3>
             <span className='text-xs uppercase'>Tất cả</span>
         </div>
-        <div className='flex items-center justify-between'>
+        <div className='flex'>
             {data?.items?.slice(0,5)?.map(el=>(
                 <SectionItem key={el?.encodeId} data={el} dataa={data}/>
             ))}

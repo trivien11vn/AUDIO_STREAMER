@@ -23,6 +23,7 @@ function App() {
         <Route path={path.PUBLIC} element={<Public />}>
           <Route path={path.HOME} element={<Home />} />
           <Route path={path.HOME__SINGER} element={<Singer />} />
+          <Route path={path.HOME__ARTIST__SINGER} element={<Singer />} />
           <Route path={path.LOGIN} element={<Login />} />
           <Route path={path.MY_MUSIC} element={<Personal />} />
           <Route path={path.ALBUM__TITLE__ID} element={<Album />} />
