@@ -8,12 +8,21 @@ import path from "./utils/path";
 import { useEffect } from "react";
 import {getHome} from './store/actions'
 import { Search } from "./components";
+import { apiGetChartHome } from "./apis";
 
 
 function App() {
   const dispatch = useDispatch()
+  const [weekChart, setWeekChart] = useState(null)
   useEffect(() => {
     dispatch(getHome())
+    const fetchChartData = async() => { 
+      const response = await apiGetChartHome()
+      if(response?.data?.err === 0){
+        setWeekChart(response?.data?.data?.weekChart)
+      }
+    }
+    fetchChartData()
   }, [])
   
   return (
@@ -28,7 +37,7 @@ function App() {
           <Route path={path.MY_MUSIC} element={<Personal />} />
           <Route path={path.ALBUM__TITLE__ID} element={<Album />} />
           <Route path={path.PLAYLIST__TITLE__ID} element={<Album />} />
-          <Route path={path.WEEKRANK__TITLE__ID} element={<WeekRank />} />
+          <Route path={path.WEEKRANK__TITLE__ID} element={<WeekRank weekChart={weekChart && Object.values(weekChart)}/>} />
           <Route path={path.ZING_CHART} element={<ZingChart />} />
           <Route path={path.SEARCH} element={<Searchh />} >
             <Route path={path.SONG} element={<SearchSong />} />

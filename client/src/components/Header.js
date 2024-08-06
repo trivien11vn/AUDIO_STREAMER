@@ -19,7 +19,7 @@ const Header = () => {
                 <Search />
             </div>
         </div>
-        <div>login</div>
+        <div></div>
     </div>
   )
 }

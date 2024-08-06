@@ -12,10 +12,7 @@ const Public = () => {
   const dispatch = useDispatch()
 
   const handleScroll = (e) => {
-    if(singer){
-      e.target.scrollTop === 0 ? dispatch(setScroll(true)) : dispatch(setScroll(false))
-    }
-
+    e.target.scrollTop === 0 ? dispatch(setScroll(true)) : dispatch(setScroll(false))
   }
   return (
     <div className='w-full relative h-screen flex flex-col bg-main-300'>
@@ -30,9 +27,10 @@ const Public = () => {
               <Loading />
             </div>
           }
-          <div className={clsx('h-[70px] fixed top-0 left-[240px] right-[0px] px-[59px] z-50 flex items-center', scrollTop ? 'bg-transparent' : 'bg-main-300')}>
+          <div className={clsx('h-[70px] fixed top-0 left-[240px] w-[700px] px-[59px] z-50 flex items-center', scrollTop ? 'bg-transparent' : 'bg-main-300')}>
             <Header />
           </div>
+          
           <div className='flex-auto w-full'>
             <Scrollbars onScroll={handleScroll} autoHide style={{ width: '100%', height: '100%'}}>
               <Outlet />

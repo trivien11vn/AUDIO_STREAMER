@@ -34,7 +34,7 @@ const RightSidebar = () => {
   }, [currentSongId]);
   
   return (
-    <div className='flex flex-col text-xs w-full h-full'>
+    <div className='flex flex-col text-xs w-full h-full bg-main-200'>
       <div className='h-[70px] py-[14px] px-2 flex-none flex items-center gap-8'>
         <div className='flex flex-auto justify-center bg-main-200 rounded-l-full rounded-r-full py-[6px] px-1 cursor-pointer'>
           <span onClick={()=>setIsRecent(false)} className={clsx('py-[5px] flex-1 flex justify-center items-center rounded-l-full rounded-r-full', !isRecent && 'bg-main-100 text-main-500 font-semibold')}>Danh sách phát</span>

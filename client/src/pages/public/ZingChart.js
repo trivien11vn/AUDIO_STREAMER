@@ -108,7 +108,6 @@ const ZingChart = () => {
     }
   }, [chartData]);
 
-  console.log(chartData)
   return (
     <div className=''>
       <div className='flex flex-col'>
@@ -143,13 +142,13 @@ const ZingChart = () => {
         <RankList data={chartData?.RTChart?.items} limitt={10}/>
       </div>
       <div className='relative'>
-        <img src={bgChart} alt='bgChart' className='w-full object-cover grayscale'/>
+        <img src={bgChart} alt='bgChart' className='w-full h-[650px] object-cover grayscale'/>
         <div className='absolute inset-0 bg-[rgba(206,217,217,0.9)]'></div>
-        <div className='absolute top-0 bottom-1/2 left-0 right-0 mt-12 px-[60px] flex flex-col gap-8'>
+        <div className='absolute top-0 bottom-1/2 left-0 right-0 mt-12 px-[60px] flex flex-col gap-4'>
           <h3 className='font-bold text-[40px] text-main-500'>Bảng xếp hạng tuần</h3>
           <div className='flex gap-4'>
             {
-              Object?.entries(chartData?.weekChart)?.map((item, index) => (
+              chartData?.weekChart && Object?.entries(chartData?.weekChart)?.map((item, index) => (
                 <div key={index} className='flex-1 bg-gray-200 rounded-md px-[10px] py-[20px]'>
                   <h3 className='text-[24px] text-main-500 font-bold'>
                     {item[0] === 'vn' ? 'Việt Nam': 
@@ -157,11 +156,21 @@ const ZingChart = () => {
                     item[0] === 'korea' ? 'K-Pop':
                     ''}
                   </h3>
+                  <div className='h-fit mt-4'>
+                    <RankList 
+                      data={item[1]?.items}
+                      limitt={5}
+                      isHideAlbum={true}
+                      link={item[1]?.link}
+                    />
+                  </div>
                 </div>
               ))
             }
           </div>
         </div>
+      </div>
+      <div className='w-full h-[500px]'>
       </div>
     </div>
   )
