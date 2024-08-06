@@ -20,3 +20,5 @@ export {default as NewRelease} from './NewRelease'
 export {default as Button} from './Button'
 
 export {default as Artist} from './Artist'
+
+export {default as RankList} from './RankList'

@@ -2,12 +2,13 @@ import React, { useEffect, useRef, useState } from 'react'
 import { apiGetChartHome } from '../../apis/music';
 import bgChart from '../../assets/week-chart.jpg'
 import { Line } from 'react-chartjs-2'
-import { ListItem, ListSong, SongItem } from '../../components';
+import { ListItem, ListSong, RankList, SongItem } from '../../components';
 import _ from 'lodash'
 
 const ZingChart = () => {
   const [chartData, setChartData] = useState(null)
   const [data, setData] = useState(null)
+  const [limit, setLimit] = useState(10)
   const [tooltipState, setTooltipState] = useState({
     opacity: 0, //khong hien
     top: 0,
@@ -107,7 +108,7 @@ const ZingChart = () => {
     }
   }, [chartData]);
 
-  console.log(data)
+  console.log(chartData)
   return (
     <div className=''>
       <div className='flex flex-col'>
@@ -115,7 +116,7 @@ const ZingChart = () => {
           <img src={bgChart} alt='bgChart' className='w-full h-[500px] object-cover grayscale'/>
           <div className='absolute inset-0 bg-[rgba(206,217,217,0.9)]'></div>
           <div className='absolute inset-0 bg-gradient-to-t from-[#CED9D9] to-transparent'></div>
-          <div className='absolute top-0 bottom-1/2 left-0 right-0 flex items-center px-[60px]'>
+          <div className='absolute top-0 bottom-1/2 left-0 right-0 mt-14 px-[60px]'>
             <h3 className='font-bold text-[40px] text-main-500'>#zingchart</h3>
           </div>
           <div className='absolute top-[35%] left-0 right-0 bottom-0 px-[60px]'>
@@ -139,12 +140,28 @@ const ZingChart = () => {
         </div>
       </div>
       <div className='px-[60px] mt-12'>
-        {chartData?.RTChart?.items?.map(item => (
-          <ListItem 
-            key={item?.encodeId}
-            songData={item}
-          />
-        ))}
+        <RankList data={chartData?.RTChart?.items} limitt={10}/>
+      </div>
+      <div className='relative'>
+        <img src={bgChart} alt='bgChart' className='w-full object-cover grayscale'/>
+        <div className='absolute inset-0 bg-[rgba(206,217,217,0.9)]'></div>
+        <div className='absolute top-0 bottom-1/2 left-0 right-0 mt-12 px-[60px] flex flex-col gap-8'>
+          <h3 className='font-bold text-[40px] text-main-500'>Bảng xếp hạng tuần</h3>
+          <div className='flex gap-4'>
+            {
+              Object?.entries(chartData?.weekChart)?.map((item, index) => (
+                <div key={index} className='flex-1 bg-gray-200 rounded-md px-[10px] py-[20px]'>
+                  <h3 className='text-[24px] text-main-500 font-bold'>
+                    {item[0] === 'vn' ? 'Việt Nam': 
+                    item[0] === 'us' ? 'US/UK':
+                    item[0] === 'korea' ? 'K-Pop':
+                    ''}
+                  </h3>
+                </div>
+              ))
+            }
+          </div>
+        </div>
       </div>
     </div>
   )
