@@ -10,7 +10,8 @@ const initState = {
     newRelease: null,
     weekChart:null,
     chart: null,
-    rank:null
+    rank:null,
+    scrollTop: true
 }
 
 const appReducer = (state = initState, action) => {
@@ -35,7 +36,12 @@ const appReducer = (state = initState, action) => {
                 ...state,
                 isLoading: action?.flag
             }
-    
+            
+        case actionType.SCROLL_POSITION:
+            return {
+                ...state,
+                scrollTop: action?.flag
+            }
         default:
             return state;
     }

@@ -4,6 +4,7 @@ import { apiGetArtist } from '../../apis/music';
 import icons from '../../utils/icons';
 import SongItem from '../../components/SongItem';
 import { Artist, Section } from '../../components';
+import { useSelector } from 'react-redux';
 
 const {FaPlay, RiUserAddFill} = icons
 const Singer = () => {
@@ -11,6 +12,9 @@ const Singer = () => {
   const positionRef = useRef()
   const [artistData, setArtistData] = useState(null)
   const [isHover, setIsHover] = useState(false)
+
+  const {scrollTop} = useSelector(state => state.app)
+
   useEffect(() => {
     const fetchArtistData = async() => { 
       const response = await apiGetArtist(singer)
@@ -27,8 +31,6 @@ const Singer = () => {
     positionRef.current.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" })
   }, [singer]);
 
-  console.log(artistData)
-  console.log(artistData?.thumbnailM)
   return (
     <div className='flex flex-col w-full'>
       <div className='relative' ref={positionRef}>

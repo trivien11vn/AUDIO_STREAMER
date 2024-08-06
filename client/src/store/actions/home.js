@@ -23,3 +23,10 @@ export const getHome = () => async (dispatch) => {
         })
     }
 }
+
+export const setScroll = (flag) => { 
+    return {
+        type: actionType.SCROLL_POSITION,
+        flag
+    }
+ }

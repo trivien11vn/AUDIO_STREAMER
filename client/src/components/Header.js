@@ -3,6 +3,7 @@ import icons from '../utils/icons'
 import Search from './Search'
 import { useNavigate, useParams} from 'react-router-dom'
 import clsx from 'clsx'
+
 const {FaLongArrowAltLeft, FaLongArrowAltRight} = icons
 const Header = () => {
   const navigate = useNavigate()

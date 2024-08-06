@@ -2,12 +2,21 @@ import React, { useState } from 'react'
 import { Outlet, useParams } from 'react-router-dom'
 import { LeftSidebar, Player, RightSidebar, Header, Loading} from '../../components'
 import { Scrollbars } from 'react-custom-scrollbars-2';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import clsx from 'clsx';
+import { setScroll } from '../../store/actions';
 const Public = () => {
   const [isDisplay, setIsDisplay] = useState(true)
-  const {isLoading} = useSelector(state => state.app)
+  const {isLoading, scrollTop} = useSelector(state => state.app)
   const {singer} = useParams()
+  const dispatch = useDispatch()
+
+  const handleScroll = (e) => {
+    if(singer){
+      e.target.scrollTop === 0 ? dispatch(setScroll(true)) : dispatch(setScroll(false))
+    }
+
+  }
   return (
     <div className='w-full relative h-screen flex flex-col bg-main-300'>
       <div className='w-full h-full flex flex-auto'>
@@ -21,11 +30,11 @@ const Public = () => {
               <Loading />
             </div>
           }
-          <div className={clsx('h-[70px] fixed top-0 left-[240px] right-[0px] px-[59px] z-50 flex items-center', singer ? 'bg-transparent' : 'bg-main-300')}>
+          <div className={clsx('h-[70px] fixed top-0 left-[240px] right-[0px] px-[59px] z-50 flex items-center', scrollTop ? 'bg-transparent' : 'bg-main-300')}>
             <Header />
           </div>
           <div className='flex-auto w-full'>
-            <Scrollbars autoHide style={{ width: '100%', height: '100%'}}>
+            <Scrollbars onScroll={handleScroll} autoHide style={{ width: '100%', height: '100%'}}>
               <Outlet />
             </Scrollbars>
           </div>

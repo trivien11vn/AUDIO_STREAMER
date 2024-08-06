@@ -38,3 +38,4 @@ export const searchMenu = [
         text: 'PLAYLIST/ALBUM',
     },
 ]
+

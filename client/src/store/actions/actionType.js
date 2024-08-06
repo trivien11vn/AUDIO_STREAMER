@@ -11,6 +11,8 @@ const actionType = {
     SEARCH: 'SEARCH',
 
     LOADING: 'LOADING',
+
+    SCROLL_POSITION: 'SCROLL_POSITION',
 }
 
 export default actionType
