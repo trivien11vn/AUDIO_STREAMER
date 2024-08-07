@@ -6,6 +6,7 @@ import { playSong, setCurrentSongData, setCurrentSongId } from '../store/actions
 import moment from 'moment';
 import {toast} from 'react-toastify'
 import {LoadingSong} from './'
+import clsx from 'clsx';
 
 const {GoHeart, GoHeartFill, TbDots, MdSkipNext, MdSkipPrevious, CiRepeat, CiShuffle, FaPlay, FaPause, LuRepeat, LuRepeat1, LuShuffle, BsMusicNoteList, SlVolumeOff, SlVolume1, SlVolume2} = icons
 const Player = ({setIsDisplay}) => {
@@ -19,9 +20,13 @@ const Player = ({setIsDisplay}) => {
     const [isNextSong, setIsNextSong] = useState(0)
     const [isLoaded, setIsLoaded] = useState(true)
     const [volume, setVolume] = useState(100)
+
+    const [isHoverVolume, setIsHoverVolume] = useState(false)
     
     const thumbRef = useRef()
     const trackRef = useRef()
+
+    const volumeRef = useRef()
 
     useEffect(() => {
       const fetchSong = async() => {
@@ -154,6 +159,13 @@ const Player = ({setIsDisplay}) => {
     audio.volume = volume / 100
   }, [volume]);
 
+  useEffect(() => {
+    if(volumeRef?.current){
+      volumeRef.current.style.cssText = `right:${100 - volume}%`
+    }
+  }, [volume])
+  
+
   return (
     <div className='bg-main-400 px-5 h-full flex'>
         <div className='w-[30%] flex-auto flex gap-3 items-center'>
@@ -208,19 +220,26 @@ const Player = ({setIsDisplay}) => {
             <span>{moment.utc(songInfo?.duration*1000).format('mm:ss')}</span>
           </div>
         </div>
-        <div className='w-[30%] flex-auto flex items-center justify-end gap-4'>
-          <div className='flex gap-2 items-center'>
+        <div className='w-[30%] hidden flex-auto min-[800px]:flex items-center justify-end gap-4'>
+          <div className='flex gap-2 items-center' onMouseEnter={e => setIsHoverVolume(true)} onMouseLeave={e=>setIsHoverVolume(false)}>
             <span
               onClick={()=>setVolume(prev => +prev=== 0 ? 70 : 0)}>
               {+volume >=50 ? <SlVolume2 size={20}/> : +volume === 0 ? <SlVolumeOff size={20}/> : <SlVolume1 size={20}/>}
             </span>
+
+            <div className={clsx('w-[130px] h-1 bg-white rounded-l-full rounded-r-full', isHoverVolume ? 'hidden' : 'relative')}>
+              <div ref={volumeRef} className='absolute left-0 top-0 bottom-0 bg-main-500 rounded-l-full rounded-r-full'>
+              </div>
+            </div>
+
             <input
-              type='range'
-              step={1}
-              min={0}
-              max={100} 
-              value={volume}
-              onChange={(e)=> setVolume(e.target.value)}
+            type='range'
+            step={1}
+            min={0}
+            max={100} 
+            value={volume}
+            onChange={(e)=> setVolume(e.target.value)}
+            className={clsx('w-[130px]', !isHoverVolume ? 'hidden': 'inline-block')}
             />
           </div>
           <span 
