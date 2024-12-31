@@ -38,7 +38,7 @@ const Artist = ({data}) => {
           type='button'
           className='text-white bg-main-500 px-4 py-2 rounded-l-full rounded-r-full flex items-center justify-center gap-1'>
           <RiUserAddFill size={15}/>
-          <span className='text-xs opacity-70'>QUAN TÂM</span>
+          <span className='text-xs opacity-70'>QUAN TÂMM</span>
         </button>
       </div>
     </div>
